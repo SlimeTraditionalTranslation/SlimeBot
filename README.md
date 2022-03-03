@@ -5,6 +5,6 @@ Discord bot for retrieving information on Slimefun items.
 Just place the jar in your plugins folder and fill in the bot token in the config.yml.
 
 # Commands
-`item <item>` - Show information on the item (This can either be the id or the name of the item)
+I'll have a proper list of commands soon.
 <br>
-`items <all|radioactive|enabled|disabled|a:ADDON_NAME>` - Show a list of items
+For now you can do `/` in discord and view all commands from the bot.
