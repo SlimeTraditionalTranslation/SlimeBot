@@ -4,14 +4,19 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tsp.slimebot.listener.DiscordMessageListener;
+import tsp.slimebot.command.CommandManager;
+import tsp.slimebot.command.WakeupCommand;
+import tsp.slimebot.listener.BotReadyListener;
+import tsp.slimebot.listener.BotShutdownListener;
+import tsp.slimebot.listener.DiscordCommandListener;
 import tsp.slimebot.util.Metrics;
-import tsp.slimebot.util.Settings;
 
 import javax.security.auth.login.LoginException;
 
@@ -19,29 +24,26 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
 
     private static SlimeBot instance;
     private Config config;
-    private Settings settings;
     private JDA jda;
+    private CommandManager commandManager;
 
     @Override
     public void onEnable() {
         instance = this;
         config = new Config(this);
-        settings = new Settings(this);
-        settings.load();
+        commandManager = new CommandManager();
+        commandManager.registerDefaults();
+        getCommand("wakeup").setExecutor(new WakeupCommand());
         new Metrics(this, 14495);
 
         try {
             if (config.getString("bot.token").isEmpty()) {
-                Bukkit.getConsoleSender().sendMessage("Please enter your bot token in the config.yml!");
+                getLogger().severe(ChatColor.RED + "Please enter your bot token in the config.yml!");
                 this.setEnabled(false);
                 return;
             }
 
-            jda = JDABuilder.createLight(config.getString("bot.token"))
-                    .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
-                    .addEventListeners(new DiscordMessageListener())
-                    .build();
-
+            startBot();
         } catch (LoginException e) {
             e.printStackTrace();
         }
@@ -49,15 +51,35 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
-        jda.shutdown();
+        stopBot();
+    }
+
+    public void stopBot() {
+        if (jda != null) {
+            jda.shutdown();
+        }
+    }
+
+    public void startBot() throws LoginException {
+        stopBot();
+
+        jda = JDABuilder.createLight(config.getString("bot.token"))
+                .enableIntents(GatewayIntent.GUILD_MESSAGES)
+                .addEventListeners(new BotReadyListener())
+                .addEventListeners(new BotShutdownListener())
+                .addEventListeners(new DiscordCommandListener())
+                .build();
+
+        getLogger().info(ChatColor.GREEN + "Bot is running on account: " + jda.getSelfUser().getAsTag());
+        getLogger().info(ChatColor.GREEN + "Invite: " + jda.getInviteUrl(Permission.ADMINISTRATOR, Permission.USE_APPLICATION_COMMANDS));
     }
 
     public JDA getJDA() {
         return jda;
     }
 
-    public Settings getSettings() {
-        return settings;
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 
     public Config getCfg() {

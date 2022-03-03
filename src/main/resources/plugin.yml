@@ -5,3 +5,9 @@ main: tsp.slimebot.SlimeBot
 version: ${project.version}
 author: Silent
 depend: [Slimefun]
+
+commands:
+  wakeup:
+    usage: /wakeup
+    description: Wakeup the bot. (Not Recommended)
+    aliases: [startslimebot, ssb]

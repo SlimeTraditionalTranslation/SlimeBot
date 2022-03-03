@@ -1,4 +1,9 @@
 # Bot Configuration
 bot:
   token: ""
-  prefix: "."
+  # If you do not know how to get your guild id, use the command /getid
+  guildId: "-1"
+
+# Commands in this list will be disabled
+disabledCommands:
+  - 'shutdown'
