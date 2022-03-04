@@ -6,16 +6,16 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tsp.slimebot.command.CommandManager;
-import tsp.slimebot.command.WakeupCommand;
-import tsp.slimebot.listener.BotReadyListener;
-import tsp.slimebot.listener.BotShutdownListener;
-import tsp.slimebot.listener.DiscordCommandListener;
+import tsp.slimebot.command.discord.CommandManager;
+import tsp.slimebot.command.minecraft.WakeupCommand;
+import tsp.slimebot.listener.discord.BotReadyListener;
+import tsp.slimebot.listener.discord.BotShutdownListener;
+import tsp.slimebot.listener.discord.DiscordCommandListener;
+import tsp.slimebot.listener.minecraft.ResearchUnlockListener;
 import tsp.slimebot.util.Metrics;
 
 import javax.security.auth.login.LoginException;
@@ -33,7 +33,6 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
         config = new Config(this);
         commandManager = new CommandManager();
         commandManager.registerDefaults();
-        getCommand("wakeup").setExecutor(new WakeupCommand());
         new Metrics(this, 14495);
 
         try {
@@ -44,6 +43,12 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
             }
 
             startBot();
+
+            if (config.getBoolean("debug")) {
+                new WakeupCommand();
+            }
+
+            new ResearchUnlockListener();
         } catch (LoginException e) {
             e.printStackTrace();
         }

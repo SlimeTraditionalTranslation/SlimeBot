@@ -1,4 +1,4 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import tsp.slimebot.SlimeBot;
 

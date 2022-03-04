@@ -1,10 +1,9 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
-import tsp.slimebot.util.Utils;
 import tsp.slimebot.util.Utils;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package tsp.slimebot.listener;
+package tsp.slimebot.listener.discord;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -18,10 +18,13 @@ public class BotReadyListener extends ListenerAdapter {
             return;
         }
 
-        guild.upsertCommand("getid", "Retrieve the id of the guild.")
+        guild.upsertCommand("getid", "Retrieve an id.")
+                .addOption(OptionType.CHANNEL, "channel", "Retrieve id of the text channel.")
                 .queue();
-        guild.upsertCommand("shutdown", "Shutdown the bot.")
-                .queue();
+        if (SlimeBot.getInstance().getCfg().getBoolean("debug")) {
+            guild.upsertCommand("shutdown", "Shutdown the bot.")
+                    .queue();
+        }
 
         guild.upsertCommand("player", "Retrieve information about a player.")
                 .addOption(OptionType.STRING, "name", "Player name", true)

@@ -6,4 +6,11 @@ bot:
 
 # Commands in this list will be disabled
 disabledCommands:
-  - 'shutdown'
+  - "shutdown"
+
+# You need to place the channel id below, NOT the name
+announcements:
+  researchUnlock: ""
+
+# Debug Mode
+debug: fales

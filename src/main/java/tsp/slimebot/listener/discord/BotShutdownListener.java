@@ -1,4 +1,4 @@
-package tsp.slimebot.listener;
+package tsp.slimebot.listener.discord;
 
 import net.dv8tion.jda.api.events.ShutdownEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

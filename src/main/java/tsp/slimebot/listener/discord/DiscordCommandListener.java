@@ -1,11 +1,11 @@
-package tsp.slimebot.listener;
+package tsp.slimebot.listener.discord;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tsp.slimebot.SlimeBot;
-import tsp.slimebot.command.CommandManager;
-import tsp.slimebot.command.SlimeCommand;
+import tsp.slimebot.command.discord.CommandManager;
+import tsp.slimebot.command.discord.SlimeCommand;
 import tsp.slimebot.util.Utils;
 
 public class DiscordCommandListener extends ListenerAdapter {

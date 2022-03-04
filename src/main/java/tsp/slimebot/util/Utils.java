@@ -20,7 +20,7 @@ import java.util.Map;
 
 public final class Utils {
 
-    public static final int CHARACTER_LIMIT = 4096 - 100; // 100 character breathing room for other information
+    //public static final int CHARACTER_LIMIT = 4096;
     private static final List<SlimefunItem> items = new ArrayList<>();
 
     private Utils() {
@@ -86,8 +86,7 @@ public final class Utils {
                 " > Wiki: " + wiki + "\n";
     }
 
-    public static String category(SlimefunItem item) {
-        ItemGroup group = item.getItemGroup();
+    public static String category(ItemGroup group) {
         String origin = group.getAddon() != null ? group.getAddon().getName() : "None" + "\n";
         return " > ID: " + wrap(group.getKey().toString()) + "\n" +
                 " > Name: " + wrap(group.getUnlocalizedName()) + "\n" +
@@ -95,16 +94,16 @@ public final class Utils {
                 " > Addon: " + wrap(origin) + "\n";
     }
 
-    public static String research(SlimefunItem item) {
-        String research = "None" + "\n";
-        if (item.getResearch() != null) {
-            List<SlimefunItem> researchItems = item.getResearch().getAffectedItems();
-            research = " > ID: " + wrap(item.getResearch().getKey().toString()) + "\n" +
-                    " > Cost: " + wrap(item.getResearch().getCost()) + "\n" +
+    public static String research(Research research) {
+        String result = "None" + "\n";
+        if (research != null) {
+            List<SlimefunItem> researchItems = research.getAffectedItems();
+            result = " > ID: " + wrap(research.getKey().toString()) + "\n" +
+                    " > Cost: " + wrap(research.getCost()) + "\n" +
                     " > Items included: " + researchItems.size() + "\n";
         }
 
-        return research;
+        return result;
     }
 
     public static String recipe(SlimefunItem item) {

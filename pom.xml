@@ -6,7 +6,7 @@
 
     <groupId>tsp.slimebot</groupId>
     <artifactId>SlimeBot</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <name>SlimeBot</name>
     <description>Discord bot for retrieving information on Slimefun items.</description>

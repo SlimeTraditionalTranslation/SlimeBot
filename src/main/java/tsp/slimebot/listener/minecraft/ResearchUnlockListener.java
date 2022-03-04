@@ -1,0 +1,41 @@
+package tsp.slimebot.listener.minecraft;
+
+import io.github.thebusybiscuit.slimefun4.api.events.ResearchUnlockEvent;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.TextChannel;
+import org.bukkit.event.EventHandler;
+import tsp.slimebot.SlimeBot;
+import tsp.slimebot.util.Utils;
+
+import java.time.Instant;
+
+// TODO: Make this internvaled such that it shows multiple researches in one message
+public class ResearchUnlockListener extends MinecraftListener {
+
+    @EventHandler
+    public void onResearchUnlock(ResearchUnlockEvent event) {
+        JDA jda = SlimeBot.getInstance().getJDA();
+        if (jda == null) {
+            return;
+        }
+
+        String id = SlimeBot.getInstance().getCfg().getString("announcements.researchUnlock");
+        if (id == null || id.isEmpty()) {
+            return;
+        }
+
+        TextChannel channel = jda.getTextChannelById(id);
+        if (channel == null) {
+            SlimeBot.getInstance().getLogger().warning("Invalid channel id: " + id);
+            return;
+        }
+
+        channel.sendMessageEmbeds(new EmbedBuilder()
+                .setAuthor(":book:" + event.getPlayer().getName() + " unlocked a research!")
+                .appendDescription(Utils.research(event.getResearch()))
+                .setTimestamp(Instant.now())
+                .build()).queue();
+    }
+
+}

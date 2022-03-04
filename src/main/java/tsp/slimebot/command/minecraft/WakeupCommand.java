@@ -1,7 +1,6 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.minecraft;
 
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +8,11 @@ import tsp.slimebot.SlimeBot;
 
 import javax.security.auth.login.LoginException;
 
-public class WakeupCommand implements CommandExecutor {
+public class WakeupCommand extends MinecraftCommand {
+
+    public WakeupCommand() {
+        super("wakeup");
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

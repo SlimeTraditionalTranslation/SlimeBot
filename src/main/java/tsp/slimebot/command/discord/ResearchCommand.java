@@ -1,4 +1,4 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -24,7 +24,7 @@ public class ResearchCommand implements SlimeCommand {
 
         String result;
         if (research.isPresent()) {
-            result = Utils.research(research.get().getAffectedItems().get(0));
+            result = Utils.research(research.get());
         } else {
             result = "No research with the key: " + Utils.wrap(rawResearch);
         }

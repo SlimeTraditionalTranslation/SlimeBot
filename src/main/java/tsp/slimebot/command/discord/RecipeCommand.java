@@ -1,15 +1,15 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bukkit.ChatColor;
 import tsp.slimebot.util.Utils;
 
-public class ItemCommand implements SlimeCommand {
+public class RecipeCommand implements SlimeCommand {
 
     @Override
     public String getName() {
-        return "item";
+        return "recipe";
     }
 
     @Override
@@ -23,18 +23,6 @@ public class ItemCommand implements SlimeCommand {
 
                 event.getHook().editOriginalEmbeds(Utils.embed(event)
                         .setAuthor(name, !wiki.isEmpty() ? wiki : "https://github.com/Slimefun/Slimefun4/wiki")
-                        .appendDescription("**Information**" + "\n")
-                        .appendDescription(Utils.information(item))
-                        .appendDescription("\n")
-                        .appendDescription("**Description**" + "\n")
-                        .appendDescription(Utils.description(item))
-                        .appendDescription("\n")
-                        .appendDescription("**Category**\n")
-                        .appendDescription(Utils.category(item))
-                        .appendDescription("\n")
-                        .appendDescription("**Research**\n")
-                        .appendDescription(Utils.research(item))
-                        .appendDescription("\n")
                         .appendDescription("**Recipe**" + "\n")
                         .appendDescription(Utils.recipe(item) + "\n")
                         .appendDescription(Utils.recipeGrid(item))
@@ -43,5 +31,11 @@ public class ItemCommand implements SlimeCommand {
                 return;
             }
         }
+
+        event.getHook().editOriginalEmbeds(Utils.embed(event)
+                .setTitle("Invalid item.")
+                .appendDescription("That item does not exist!" + "\n")
+                .appendDescription("Example item: `backpack`")
+                .build()).queue();
     }
 }

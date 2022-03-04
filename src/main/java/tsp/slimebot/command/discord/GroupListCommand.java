@@ -1,4 +1,4 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;

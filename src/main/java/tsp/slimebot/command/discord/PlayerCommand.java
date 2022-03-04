@@ -1,4 +1,4 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.items.HashedArmorpiece;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
@@ -6,11 +6,9 @@ import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
 import tsp.slimebot.util.Utils;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class PlayerCommand implements SlimeCommand {
 
@@ -24,6 +22,7 @@ public class PlayerCommand implements SlimeCommand {
         String name = event.getOption("name").getAsString();
 
         PlayerProfile.get(Bukkit.getOfflinePlayer(name), profile -> {
+            String online = profile.getPlayer() != null ? ":green_circle:" : ":red_circle:";
             Set<Research> researches = profile.getResearches();
             int allResearches = Slimefun.getRegistry().getResearches().size();
             float progress = Math.round(((researches.size() * 100.0F) / allResearches) * 100.0F) / 100.0F;
@@ -34,7 +33,7 @@ public class PlayerCommand implements SlimeCommand {
             String boots = armor[3].getItem().isPresent() ? armor[3].getItem().get().getItemName() : "None";
 
             event.getHook().editOriginalEmbeds(Utils.embed(event)
-                    .setAuthor(name + " (" + profile.getUUID().toString()  + ")")
+                    .setAuthor(online + name + " (" + profile.getUUID().toString()  + ")")
                     .appendDescription("Title: " + Utils.wrap(profile.getTitle()))
                     .appendDescription("\nResearch Progress: " + Utils.wrap(progress + "% " + '(' + researches.size() + " / " + allResearches + ')'))
                     .appendDescription("\nTotal XP Levels spent: " + Utils.wrap(researches.stream().mapToInt(Research::getCost).sum()))

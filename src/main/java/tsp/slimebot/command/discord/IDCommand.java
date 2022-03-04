@@ -1,7 +1,9 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import tsp.slimebot.util.Utils;
 
 /**
@@ -25,9 +27,20 @@ public class IDCommand implements SlimeCommand {
             return;
         }
 
+        String id = "";
+        OptionMapping channelOption = event.getOption("channel");
+        if (channelOption != null) {
+            TextChannel textChannel = channelOption.getAsTextChannel();
+            if (textChannel != null) {
+                id = textChannel.getId();
+            }
+        } else {
+            id = guild.getId();
+        }
+
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("Guild ID | " + guild.getName(), guild.getIconUrl())
-                .appendDescription(Utils.wrap(guild.getId()))
+                .setAuthor("Retrieved ID")
+                .appendDescription(Utils.wrap(id))
                 .build()).queue();
     }
 

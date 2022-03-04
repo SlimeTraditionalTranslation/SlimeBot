@@ -1,8 +1,6 @@
-package tsp.slimebot.command;
+package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import tsp.slimebot.util.Utils;
@@ -27,7 +25,7 @@ public class GroupCommand implements SlimeCommand {
 
         String result = "None.";
         if (group.isPresent()) {
-            result = Utils.category(group.get().getItems().get(0));
+            result = Utils.category(group.get());
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
