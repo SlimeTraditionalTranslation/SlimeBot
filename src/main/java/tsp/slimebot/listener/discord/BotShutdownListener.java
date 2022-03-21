@@ -9,7 +9,7 @@ public class BotShutdownListener extends ListenerAdapter {
 
     @Override
     public void onShutdown(@NotNull ShutdownEvent event) {
-        SlimeBot.getInstance().getLogger().info("The bot has shutdown. Reason: " + (event.getCloseCode() != null ? event.getCloseCode() : "Unknown"));
+        SlimeBot.getInstance().getLogger().info("機器人已關閉. 原因: " + (event.getCloseCode() != null ? event.getCloseCode() : "未知"));
     }
 
 }

@@ -46,16 +46,16 @@ public final class Utils {
             for (Object entry : list) {
                 Research research = (Research) entry;
                 builder.append("**" + research.getKey().getKey().toUpperCase() + "**")
-                        .append("\n > Namespace: " + wrap(research.getKey().getNamespace()))
-                        .append("\n > Items included: " + research.getAffectedItems().size())
+                        .append("\n > 命名空間: " + wrap(research.getKey().getNamespace()))
+                        .append("\n > 包含物品: " + research.getAffectedItems().size())
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof ItemGroup) {
             for (Object entry : list) {
                 ItemGroup group = (ItemGroup) entry;
                 builder.append("**" + group.getUnlocalizedName() + "**")
-                        .append("\n > Tier: " + group.getTier())
-                        .append("\n > Items included: " + group.getItems().size())
+                        .append("\n > 等即: " + group.getTier())
+                        .append("\n > 包含物品: " + group.getItems().size())
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof SlimefunItem) {
@@ -69,7 +69,7 @@ public final class Utils {
     }
 
     public static String description(SlimefunItem item) {
-        List<String> lore = item.getItem().getItemMeta().hasLore() ? item.getItem().getItemMeta().getLore() : Collections.singletonList("None");
+        List<String> lore = item.getItem().getItemMeta().hasLore() ? item.getItem().getItemMeta().getLore() : Collections.singletonList("無");
         StringBuilder description = new StringBuilder();
         for (String line : lore) {
             description.append(stripColor(line)).append("\n");
@@ -79,28 +79,28 @@ public final class Utils {
     }
 
     public static String information(SlimefunItem item) {
-        String wiki = item.getWikipage().isPresent() ? item.getWikipage().get() : "None" + "\n";
+        String wiki = item.getWikipage().isPresent() ? item.getWikipage().get() : "無" + "\n";
         return " > ID: " + wrap(item.getId()) + "\n" +
-                " > Addon: " + wrap(item.getAddon().getName()) + "\n" +
-                " > State: " + wrap(item.getState().name()) + "\n" +
+                " > 附加: " + wrap(item.getAddon().getName()) + "\n" +
+                " > 狀態: " + wrap(item.getState().name()) + "\n" +
                 " > Wiki: " + wiki + "\n";
     }
 
     public static String category(ItemGroup group) {
-        String origin = group.getAddon() != null ? group.getAddon().getName() : "None" + "\n";
+        String origin = group.getAddon() != null ? group.getAddon().getName() : "無" + "\n";
         return " > ID: " + wrap(group.getKey().toString()) + "\n" +
-                " > Name: " + wrap(group.getUnlocalizedName()) + "\n" +
-                " > Tier: " + wrap(group.getTier()) + "\n" +
-                " > Addon: " + wrap(origin) + "\n";
+                " > 名稱: " + wrap(group.getUnlocalizedName()) + "\n" +
+                " > 等級: " + wrap(group.getTier()) + "\n" +
+                " > 附加: " + wrap(origin) + "\n";
     }
 
     public static String research(Research research) {
-        String result = "None" + "\n";
+        String result = "無" + "\n";
         if (research != null) {
             List<SlimefunItem> researchItems = research.getAffectedItems();
             result = " > ID: " + wrap(research.getKey().toString()) + "\n" +
-                    " > Cost: " + wrap(research.getCost()) + "\n" +
-                    " > Items included: " + researchItems.size() + "\n";
+                    " > 消耗: " + wrap(research.getCost()) + "\n" +
+                    " > 包含物品: " + researchItems.size() + "\n";
         }
 
         return result;
@@ -108,11 +108,11 @@ public final class Utils {
 
     public static String recipe(SlimefunItem item) {
         SlimefunItem machine = item.getRecipeType().getMachine();
-        String name = machine != null ? machine.getItemName() : "Unknown";
+        String name = machine != null ? machine.getItemName() : "未知";
 
-        return " > Machine ID: " + wrap(item.getRecipeType().getKey().toString()) + "\n" +
-                " > Machine: " + wrap(stripColor(name)) + "\n" +
-                " > Output (" + item.getRecipeOutput().getAmount() + "): " + wrap(Utils.getName(item.getRecipeOutput()));
+        return " > 機器ID: " + wrap(item.getRecipeType().getKey().toString()) + "\n" +
+                " > 機器: " + wrap(stripColor(name)) + "\n" +
+                " > 輸出 (" + item.getRecipeOutput().getAmount() + "): " + wrap(Utils.getName(item.getRecipeOutput()));
     }
 
     public static String recipeGrid(SlimefunItem item) {
@@ -204,7 +204,7 @@ public final class Utils {
     public static EmbedBuilder embed(SlashCommandInteractionEvent event) {
         return new EmbedBuilder()
                 .setColor(Color.GREEN)
-                .setFooter("Requested by " + event.getUser().getAsTag())
+                .setFooter("由 " + event.getUser().getAsTag() + " 進行請求")
                 .setTimestamp(Instant.now());
     }
 

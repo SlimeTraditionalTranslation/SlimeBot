@@ -27,12 +27,12 @@ public class ResearchUnlockListener extends MinecraftListener {
 
         TextChannel channel = jda.getTextChannelById(id);
         if (channel == null) {
-            SlimeBot.getInstance().getLogger().warning("Invalid channel id: " + id);
+            SlimeBot.getInstance().getLogger().warning("未知的頻道ID: " + id);
             return;
         }
 
         channel.sendMessageEmbeds(new EmbedBuilder()
-                .setAuthor(":book:" + event.getPlayer().getName() + " unlocked a research!")
+                .setAuthor(":book:" + event.getPlayer().getName() + " 解鎖了一項研究!")
                 .appendDescription(Utils.research(event.getResearch()))
                 .setTimestamp(Instant.now())
                 .build()).queue();

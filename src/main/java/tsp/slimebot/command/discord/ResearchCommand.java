@@ -26,13 +26,13 @@ public class ResearchCommand implements SlimeCommand {
         if (research.isPresent()) {
             result = Utils.research(research.get());
         } else {
-            result = "No research with the key: " + Utils.wrap(rawResearch);
+            result = "沒有這個研究鍵: " + Utils.wrap(rawResearch);
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
                 .setAuthor(research
                         .map(r -> r.getKey().getKey().toUpperCase())
-                        .orElse("Invalid research."))
+                        .orElse("未知研究."))
                 .appendDescription(result)
                 .build()).queue();
     }

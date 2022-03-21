@@ -21,14 +21,14 @@ public class WakeupCommand extends MinecraftCommand {
         }
 
         if (SlimeBot.getInstance().getJDA() != null) {
-            sender.sendMessage("The bot is already running.");
+            sender.sendMessage("機器人已正在運行.");
             return true;
         }
 
         try {
             SlimeBot.getInstance().startBot();
         } catch (LoginException e) {
-            sender.sendMessage("Failed to start bot.");
+            sender.sendMessage("無法啟動機器人.");
             e.printStackTrace();
         }
         return true;

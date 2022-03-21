@@ -1,16 +1,16 @@
-# Bot Configuration
+# 機器人設定
 bot:
   token: ""
-  # If you do not know how to get your guild id, use the command /getid
+  # 如果你不知道如何獲取你自己的 Discord 伺服器ID, 可以在伺服器中使用此指令 /getid
   guildId: "-1"
 
-# Commands in this list will be disabled
+# 此列表中的指令將會被停用
 disabledCommands:
   - "shutdown"
 
-# You need to place the channel id below, NOT the name
+# 你必須在底下放置頻道ID, 而不是頻道名稱
 announcements:
   researchUnlock: ""
 
-# Debug Mode
+# Debug 模式
 debug: fales

@@ -23,8 +23,8 @@ public class ShutdownCommand implements SlimeCommand {
     @Override
     public void onCommand(SlashCommandInteractionEvent event) {
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("JDA disabled.")
-                .appendDescription("JDA has been disabled.")
+                .setAuthor("JDA 已關閉.")
+                .appendDescription("JDA 已被關閉.")
                 .build()).complete();
 
         SlimeBot.getInstance().stopBot();

@@ -21,8 +21,8 @@ public class DiscordCommandListener extends ListenerAdapter {
         if (event.getMember() != null) {
             if (!event.getMember().hasPermission(command.getPermission())) {
                 event.replyEmbeds(Utils.embed(event)
-                                .setAuthor("No permission!")
-                                .appendDescription("This command requires " + Utils.wrap(command.getPermission().getName()))
+                                .setAuthor("沒有權限!")
+                                .appendDescription("這個指令需要 " + Utils.wrap(command.getPermission().getName()))
                                 .build())
                         .setEphemeral(true)
                         .queue();

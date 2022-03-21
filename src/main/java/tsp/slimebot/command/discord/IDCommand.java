@@ -21,8 +21,8 @@ public class IDCommand implements SlimeCommand {
         Guild guild = event.getGuild();
         if (guild == null) {
             event.getHook().editOriginalEmbeds(Utils.embed(event)
-                    .setAuthor("Not in a guild.")
-                    .appendDescription("You must run this command in a guild!")
+                    .setAuthor("並不在一個 Discord 伺服器.")
+                    .appendDescription("你必須在 Discord 伺服器中執行此指令!")
                     .build()).queue();
             return;
         }
@@ -39,7 +39,7 @@ public class IDCommand implements SlimeCommand {
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("Retrieved ID")
+                .setAuthor("檢索到的 ID")
                 .appendDescription(Utils.wrap(id))
                 .build()).queue();
     }

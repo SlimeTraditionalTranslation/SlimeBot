@@ -23,7 +23,7 @@ public class GroupCommand implements SlimeCommand {
                 .filter(g -> g.getUnlocalizedName().equalsIgnoreCase(name))
                 .findFirst();
 
-        String result = "None.";
+        String result = "無.";
         if (group.isPresent()) {
             result = Utils.category(group.get());
         }

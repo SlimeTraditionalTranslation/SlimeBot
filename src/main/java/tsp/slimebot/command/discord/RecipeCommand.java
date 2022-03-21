@@ -23,7 +23,7 @@ public class RecipeCommand implements SlimeCommand {
 
                 event.getHook().editOriginalEmbeds(Utils.embed(event)
                         .setAuthor(name, !wiki.isEmpty() ? wiki : "https://github.com/Slimefun/Slimefun4/wiki")
-                        .appendDescription("**Recipe**" + "\n")
+                        .appendDescription("**配方**" + "\n")
                         .appendDescription(Utils.recipe(item) + "\n")
                         .appendDescription(Utils.recipeGrid(item))
                         .build()
@@ -33,9 +33,9 @@ public class RecipeCommand implements SlimeCommand {
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setTitle("Invalid item.")
-                .appendDescription("That item does not exist!" + "\n")
-                .appendDescription("Example item: `backpack`")
+                .setTitle("未知物品.")
+                .appendDescription("這個物品並不存在!" + "\n")
+                .appendDescription("範例物品: `背包`")
                 .build()).queue();
     }
 }

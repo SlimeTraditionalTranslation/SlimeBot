@@ -13,43 +13,43 @@ public class BotReadyListener extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
         Guild guild = event.getJDA().getGuildById(SlimeBot.getInstance().getCfg().getString("bot.guildId"));
         if (guild == null) {
-            SlimeBot.getInstance().getLogger().severe("Invalid guild id!");
+            SlimeBot.getInstance().getLogger().severe("未知 Discord 伺服器ID!");
             SlimeBot.getInstance().stopBot();
             return;
         }
 
-        guild.upsertCommand("getid", "Retrieve an id.")
-                .addOption(OptionType.CHANNEL, "channel", "Retrieve id of the text channel.")
+        guild.upsertCommand("getid", "檢索ID.")
+                .addOption(OptionType.CHANNEL, "channel", "檢索文字頻道ID.")
                 .queue();
         if (SlimeBot.getInstance().getCfg().getBoolean("debug")) {
-            guild.upsertCommand("shutdown", "Shutdown the bot.")
+            guild.upsertCommand("shutdown", "關閉機器人.")
                     .queue();
         }
 
-        guild.upsertCommand("player", "Retrieve information about a player.")
-                .addOption(OptionType.STRING, "name", "Player name", true)
+        guild.upsertCommand("player", "檢索有關玩家的資訊.")
+                .addOption(OptionType.STRING, "name", "玩家名稱", true)
                 .queue();
-        guild.upsertCommand("group", "Retrieve information about a group (category).")
-                .addOption(OptionType.STRING, "name", "Group name", true)
+        guild.upsertCommand("group", "檢索有關組別的資訊 (類別).")
+                .addOption(OptionType.STRING, "name", "組別名稱", true)
                 .queue();
-        guild.upsertCommand("groups", "List all groups.")
-                .addOption(OptionType.INTEGER, "page", "Page")
+        guild.upsertCommand("groups", "列出所有組別.")
+                .addOption(OptionType.INTEGER, "page", "頁面")
                 .queue();
-        guild.upsertCommand("item", "Retrieve detailed information about an item.")
-                .addOption(OptionType.STRING, "name", "Item name", true)
+        guild.upsertCommand("item", "檢索有關物品的詳細資訊.")
+                .addOption(OptionType.STRING, "name", "物品名稱", true)
                 .queue();
-        guild.upsertCommand("items", "List all items")
+        guild.upsertCommand("items", "列出所有物品")
                 .addOption(OptionType.STRING, "type", "ALL|ENABLED|DISABLED|RADIOACTIVE|a:ADDON|r:RESEARCH")
-                .addOption(OptionType.INTEGER, "page", "Page")
+                .addOption(OptionType.INTEGER, "page", "頁面")
                 .queue();
-        guild.upsertCommand("recipe", "Retrieve information about a recipe")
-                .addOption(OptionType.STRING, "name", "Item name")
+        guild.upsertCommand("recipe", "檢索有關配方的資訊")
+                .addOption(OptionType.STRING, "name", "物品名稱")
                 .queue();
-        guild.upsertCommand("research", "Retrieve information about a research")
-                .addOption(OptionType.STRING, "name", "Research key")
+        guild.upsertCommand("research", "檢索有關研究的資訊")
+                .addOption(OptionType.STRING, "name", "研究鍵")
                 .queue();
-        guild.upsertCommand("researches", "List all researches.")
-                .addOption(OptionType.INTEGER, "page", "Page")
+        guild.upsertCommand("researches", "列出所有的研究.")
+                .addOption(OptionType.INTEGER, "page", "頁面")
                 .queue();
     }
 }

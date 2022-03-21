@@ -30,7 +30,7 @@ public class ResearchListCommand implements SlimeCommand {
         String result = Utils.asString(Utils.getPage(researches, page, 10));
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("Researches | Page: " + page)
+                .setAuthor("研究 | 頁面: " + page)
                 .appendDescription(result.substring(0, Math.min(result.length(), 4096)))
                 .build())
                 .queue();

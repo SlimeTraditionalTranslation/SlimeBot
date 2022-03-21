@@ -75,7 +75,7 @@ public class ItemListCommand implements SlimeCommand {
         String result = Utils.asString(results);
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor(type.toUpperCase() + " Items | Page: " + page)
+                .setAuthor(type.toUpperCase() + " 物品 | 頁面: " + page)
                 .appendDescription(result.substring(0, Math.min(result.length(), 4096))) // Discord character limit
                 .build()
         ).queue();

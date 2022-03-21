@@ -27,7 +27,7 @@ public class GroupListCommand implements SlimeCommand {
                 .collect(Collectors.toList()), page, 10));
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("Groups | Page: " + page)
+                .setAuthor("組別 | 頁面: " + page)
                 .appendDescription(result)
                 .build()).queue();
     }

@@ -37,7 +37,7 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
 
         try {
             if (config.getString("bot.token").isEmpty()) {
-                getLogger().severe(ChatColor.RED + "Please enter your bot token in the config.yml!");
+                getLogger().severe(ChatColor.RED + "請輸入你的機器人Token在 config.yml!");
                 this.setEnabled(false);
                 return;
             }
@@ -75,8 +75,8 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
                 .addEventListeners(new DiscordCommandListener())
                 .build();
 
-        getLogger().info(ChatColor.GREEN + "Bot is running on account: " + jda.getSelfUser().getAsTag());
-        getLogger().info(ChatColor.GREEN + "Invite: " + jda.getInviteUrl(Permission.ADMINISTRATOR, Permission.USE_APPLICATION_COMMANDS));
+        getLogger().info(ChatColor.GREEN + "機器人正在此帳戶名稱上運行: " + jda.getSelfUser().getAsTag());
+        getLogger().info(ChatColor.GREEN + "邀請連結: " + jda.getInviteUrl(Permission.ADMINISTRATOR, Permission.USE_APPLICATION_COMMANDS));
     }
 
     public JDA getJDA() {
