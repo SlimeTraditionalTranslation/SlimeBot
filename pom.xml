@@ -6,7 +6,7 @@
 
     <groupId>tsp.slimebot</groupId>
     <artifactId>SlimeBot</artifactId>
-    <version>Efina 1.1.0</version>
+    <version>Efina 1.2.0</version>
 
     <name>SlimeBot</name>
     <description>繁體翻譯版 Discord 機器人用於檢索 Slimefun 的物品資訊.</description>
@@ -14,6 +14,10 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <spigot.version>1.18-R0.1-SNAPSHOT</spigot.version>
+        <slimefun.version>RC-31</slimefun.version>
+        <jda.scope>compile</jda.scope>
+        <finalName>${project.name}-${project.version}</finalName>
     </properties>
 
     <repositories>
@@ -31,19 +35,20 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <version>${spigot.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-30</version>
+            <version>${slimefun.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>5.0.0-alpha.5</version>
+            <scope>${jda.scope}</scope>
             <exclusions>
                 <exclusion>
                     <groupId>club.minnced</groupId>
@@ -54,6 +59,7 @@
     </dependencies>
 
     <build>
+        <finalName>${finalName}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -62,6 +68,42 @@
         </resources>
 
         <plugins>
+            <!-- Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- Antrun -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <configuration>
+                            <target>
+                                <propertyfile file="src/main/resources/build.properties" comment="Build information.">
+                                    <entry key="author" default="unknown"/>
+                                    <entry key="number" type="int" default="0" operation="+"/>
+                                    <entry key="compiled" type="date" value="now" pattern="dd-MM-yyyy HH:mm:ss"/>
+                                </propertyfile>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

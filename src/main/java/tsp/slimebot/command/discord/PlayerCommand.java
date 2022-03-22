@@ -33,8 +33,8 @@ public class PlayerCommand implements SlimeCommand {
             String boots = armor[3].getItem().isPresent() ? armor[3].getItem().get().getItemName() : "無";
 
             event.getHook().editOriginalEmbeds(Utils.embed(event)
-                    .setAuthor(online + name + " (" + profile.getUUID().toString()  + ")")
-                    .appendDescription("稱號: " + Utils.wrap(profile.getTitle()))
+                    .appendDescription(online + name + " (" + profile.getUUID().toString()  + ")")
+                    .appendDescription("\n稱號: " + Utils.wrap(profile.getTitle()))
                     .appendDescription("\n研究進度: " + Utils.wrap(progress + "% " + '(' + researches.size() + " / " + allResearches + ')'))
                     .appendDescription("\n總花費經驗等級: " + Utils.wrap(researches.stream().mapToInt(Research::getCost).sum()))
                             .appendDescription("\n")

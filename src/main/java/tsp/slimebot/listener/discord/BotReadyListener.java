@@ -6,25 +6,22 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import org.jetbrains.annotations.NotNull;
 import tsp.slimebot.SlimeBot;
+import tsp.slimebot.util.Log;
 
 public class BotReadyListener extends ListenerAdapter {
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        Guild guild = event.getJDA().getGuildById(SlimeBot.getInstance().getCfg().getString("bot.guildId"));
+        Guild guild = event.getJDA().getGuildById(SlimeBot.getInstance().getConfig().getString("bot.guildId"));
         if (guild == null) {
-            SlimeBot.getInstance().getLogger().severe("未知 Discord 伺服器ID!");
-            SlimeBot.getInstance().stopBot();
+            Log.error("未知 Discord 伺服器ID!");
+            SlimeBot.getInstance().getBot().stopBot();
             return;
         }
 
         guild.upsertCommand("getid", "檢索ID.")
                 .addOption(OptionType.CHANNEL, "channel", "檢索文字頻道ID.")
                 .queue();
-        if (SlimeBot.getInstance().getCfg().getBoolean("debug")) {
-            guild.upsertCommand("shutdown", "關閉機器人.")
-                    .queue();
-        }
 
         guild.upsertCommand("player", "檢索有關玩家的資訊.")
                 .addOption(OptionType.STRING, "name", "玩家名稱", true)
@@ -50,6 +47,10 @@ public class BotReadyListener extends ListenerAdapter {
                 .queue();
         guild.upsertCommand("researches", "列出所有的研究.")
                 .addOption(OptionType.INTEGER, "page", "頁面")
+                .queue();
+        guild.upsertCommand("addons", "列出所有已安裝的附加.")
+                .addOption(OptionType.INTEGER, "page", "頁面")
+                .addOption(OptionType.BOOLEAN, "detailed", "詳細列表")
                 .queue();
     }
 }

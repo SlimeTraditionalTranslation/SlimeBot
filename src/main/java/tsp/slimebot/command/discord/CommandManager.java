@@ -24,7 +24,7 @@ public class CommandManager {
      */
     public void registerConfigurable(SlimeCommand command) {
         if (disabled.isEmpty()) {
-            disabled.addAll(SlimeBot.getInstance().getCfg().getStringList("disabledCommands"));
+            disabled.addAll(SlimeBot.getInstance().getConfig().getStringList("disabledCommands"));
         }
 
         if (!disabled.contains(command.getName())) {
@@ -33,10 +33,10 @@ public class CommandManager {
     }
 
     public void registerDefaults() {
-        registerConfigurable(new ShutdownCommand());
         registerConfigurable(new IDCommand());
 
         registerConfigurable(new PlayerCommand());
+        registerConfigurable(new AddonsCommand());
         registerConfigurable(new GroupCommand());
         registerConfigurable(new GroupListCommand());
         registerConfigurable(new ItemCommand());

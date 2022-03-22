@@ -6,11 +6,12 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.event.EventHandler;
 import tsp.slimebot.SlimeBot;
+import tsp.slimebot.util.Log;
 import tsp.slimebot.util.Utils;
 
 import java.time.Instant;
 
-// TODO: Make this internvaled such that it shows multiple researches in one message
+// TODO: Make this interval based such that it shows multiple researches in one message
 public class ResearchUnlockListener extends MinecraftListener {
 
     @EventHandler
@@ -20,14 +21,14 @@ public class ResearchUnlockListener extends MinecraftListener {
             return;
         }
 
-        String id = SlimeBot.getInstance().getCfg().getString("announcements.researchUnlock");
+        String id = SlimeBot.getInstance().getConfig().getString("announcements.researchUnlock");
         if (id == null || id.isEmpty()) {
             return;
         }
 
         TextChannel channel = jda.getTextChannelById(id);
         if (channel == null) {
-            SlimeBot.getInstance().getLogger().warning("未知的頻道ID: " + id);
+            Log.warning("未知的頻道ID: " + id);
             return;
         }
 

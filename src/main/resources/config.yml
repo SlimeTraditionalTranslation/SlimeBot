@@ -12,5 +12,8 @@ disabledCommands:
 announcements:
   researchUnlock: ""
 
+# 自動化更新 (非官方版沒有)
+auto-update: false
+
 # Debug 模式
 debug: fales

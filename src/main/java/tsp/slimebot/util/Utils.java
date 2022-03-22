@@ -8,7 +8,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
 import java.awt.Color;
 import java.time.Instant;
@@ -17,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 public final class Utils {
 
@@ -54,7 +60,7 @@ public final class Utils {
             for (Object entry : list) {
                 ItemGroup group = (ItemGroup) entry;
                 builder.append("**" + group.getUnlocalizedName() + "**")
-                        .append("\n > 等即: " + group.getTier())
+                        .append("\n > 等級: " + group.getTier())
                         .append("\n > 包含物品: " + group.getItems().size())
                         .append("\n\n");
             }
@@ -98,7 +104,7 @@ public final class Utils {
         String result = "無" + "\n";
         if (research != null) {
             List<SlimefunItem> researchItems = research.getAffectedItems();
-            result = " > ID: " + wrap(research.getKey().toString()) + "\n" +
+            result = " > ID: " + wrap(research.getUnlocalizedName()) + "\n" +
                     " > 消耗: " + wrap(research.getCost()) + "\n" +
                     " > 包含物品: " + researchItems.size() + "\n";
         }
@@ -116,7 +122,10 @@ public final class Utils {
     }
 
     public static String recipeGrid(SlimefunItem item) {
-        ItemStack[] recipe = item.getRecipe();
+        return recipeGrid(item.getRecipe());
+    }
+
+    public static String recipeGrid(ItemStack[] recipe) {
         Map<ItemStack, Character> mapper = new HashMap<>();
 
         // Maps each ItemStack to it's corresponding character
@@ -165,6 +174,30 @@ public final class Utils {
         return builder.toString();
     }
 
+    public static String vanillaRecipeGrids(List<Recipe> recipes) {
+        StringBuilder builder = new StringBuilder();
+        for (Recipe recipe : recipes) {
+            if(recipe instanceof ShapedRecipe) {
+                ShapedRecipe shaped = (ShapedRecipe)recipe;
+                builder.append("**合成 (有序**)");
+                builder.append("*機器人尚未實現此功能*"); // TODO: finish
+            } else if(recipe instanceof ShapelessRecipe) {
+                ShapelessRecipe shapeless = (ShapelessRecipe)recipe;
+                builder.append("**合成 (無序)**");
+                builder.append(recipeGrid(shapeless.getIngredientList().toArray(new ItemStack[8])));
+            } else if(recipe instanceof FurnaceRecipe) {
+                FurnaceRecipe furnace = (FurnaceRecipe)recipe;
+                builder.append("**熔爐**");
+                builder.append(" > 輸入: " + furnace.getInput());
+                builder.append(" > 產物: " + furnace.getResult().getItemMeta().getDisplayName());
+            }
+
+            builder.append("\n");
+        }
+
+        return builder.toString();
+    }
+
     public static String getName(ItemStack item) {
         if (item == null) return "null";
 
@@ -182,11 +215,13 @@ public final class Utils {
         String name = ChatColor.stripColor(provided.getItemName().toLowerCase());
         return raw.equalsIgnoreCase(provided.getId())
                 || raw.equalsIgnoreCase(name)
-                || raw.toLowerCase().startsWith(name);
+                || raw.toLowerCase().startsWith(name)
+                || raw.toLowerCase().startsWith(name.replace("_", " "));
     }
 
     public static boolean matches(String raw, Research provided) {
-        return provided.getKey().getKey().equalsIgnoreCase(raw);
+        return provided.getKey().getKey().equalsIgnoreCase(raw) ||
+                provided.getUnlocalizedName().equalsIgnoreCase(raw);
     }
 
     public static String wrap(String string) {
@@ -199,6 +234,10 @@ public final class Utils {
 
     public static String stripColor(String s) {
         return ChatColor.stripColor(s);
+    }
+
+    public static String colorize(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     public static EmbedBuilder embed(SlashCommandInteractionEvent event) {
@@ -227,6 +266,10 @@ public final class Utils {
 
         // toIndex exclusive
         return sourceList.subList(fromIndex, Math.min(fromIndex + pageSize, sourceList.size()));
+    }
+
+    public static void sendMessage(CommandSender receiver, String s) {
+        receiver.sendMessage(ChatColor.translateAlternateColorCodes('&', s));
     }
 
 }

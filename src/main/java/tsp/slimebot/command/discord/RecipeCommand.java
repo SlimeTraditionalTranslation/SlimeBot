@@ -2,7 +2,6 @@ package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import org.bukkit.ChatColor;
 import tsp.slimebot.util.Utils;
 
 public class RecipeCommand implements SlimeCommand {
@@ -17,7 +16,7 @@ public class RecipeCommand implements SlimeCommand {
         String rawItem = event.getOption("name").getAsString();
 
         for (SlimefunItem item : Utils.getItems()) {
-            String name = ChatColor.stripColor(item.getItemName());
+            String name = Utils.stripColor(item.getItemName());
             if (Utils.matches(rawItem, item)) {
                 String wiki = item.getWikipage().isPresent() ? item.getWikipage().get() : "";
 
