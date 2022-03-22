@@ -12,7 +12,7 @@
  *
  * Violations will result in a ban of your plugin and account from bStats.
  */
-package tsp.slimebot.util;
+package tsp.slimebot;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -47,7 +47,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Metrics {
+class Metrics {
 
     private final Plugin plugin;
 
@@ -64,14 +64,14 @@ public class Metrics {
         this.plugin = plugin;
         // Get the config file
         File bStatsFolder = new File(plugin.getDataFolder().getParentFile(), "bStats");
-        File configFile = new File(bStatsFolder, "config.yml");
+        File configFile = new File(bStatsFolder, "SlimeBot.getInstance().getConfig().yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-        if (!config.isSet("serverUuid")) {
-            config.addDefault("enabled", true);
-            config.addDefault("serverUuid", UUID.randomUUID().toString());
-            config.addDefault("logFailedRequests", false);
-            config.addDefault("logSentData", false);
-            config.addDefault("logResponseStatusText", false);
+        if (!SlimeBot.getInstance().getConfig().isSet("serverUuid")) {
+            SlimeBot.getInstance().getConfig().addDefault("enabled", true);
+            SlimeBot.getInstance().getConfig().addDefault("serverUuid", UUID.randomUUID().toString());
+            SlimeBot.getInstance().getConfig().addDefault("logFailedRequests", false);
+            SlimeBot.getInstance().getConfig().addDefault("logSentData", false);
+            SlimeBot.getInstance().getConfig().addDefault("logResponseStatusText", false);
             // Inform the server owners about bStats
             config
                     .options()
@@ -83,16 +83,16 @@ public class Metrics {
                                     + "anonymous.")
                     .copyDefaults(true);
             try {
-                config.save(configFile);
+                SlimeBot.getInstance().getConfig().save(configFile);
             } catch (IOException ignored) {
             }
         }
         // Load the data
-        boolean enabled = config.getBoolean("enabled", true);
-        String serverUUID = config.getString("serverUuid");
-        boolean logErrors = config.getBoolean("logFailedRequests", false);
-        boolean logSentData = config.getBoolean("logSentData", false);
-        boolean logResponseStatusText = config.getBoolean("logResponseStatusText", false);
+        boolean enabled = SlimeBot.getInstance().getConfig().getBoolean("enabled", true);
+        String serverUUID = SlimeBot.getInstance().getConfig().getString("serverUuid");
+        boolean logErrors = SlimeBot.getInstance().getConfig().getBoolean("logFailedRequests", false);
+        boolean logSentData = SlimeBot.getInstance().getConfig().getBoolean("logSentData", false);
+        boolean logResponseStatusText = SlimeBot.getInstance().getConfig().getBoolean("logResponseStatusText", false);
         metricsBase =
                 new MetricsBase(
                         "bukkit",

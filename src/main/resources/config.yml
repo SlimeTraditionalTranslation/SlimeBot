@@ -12,5 +12,8 @@ disabledCommands:
 announcements:
   researchUnlock: ""
 
+# Automatic Updates
+auto-update: false
+
 # Debug Mode
 debug: fales

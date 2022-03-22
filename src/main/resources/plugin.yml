@@ -7,7 +7,6 @@ author: Silent
 depend: [Slimefun]
 
 commands:
-  wakeup:
-    usage: /wakeup
-    description: Wakeup the bot. (Not Recommended)
-    aliases: [startslimebot, ssb]
+  slimebot:
+    usage: /slimebot
+    description: Plugin Information

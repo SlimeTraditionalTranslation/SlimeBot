@@ -8,7 +8,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
 import java.awt.Color;
 import java.time.Instant;
@@ -17,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 public final class Utils {
 
@@ -98,7 +104,7 @@ public final class Utils {
         String result = "None" + "\n";
         if (research != null) {
             List<SlimefunItem> researchItems = research.getAffectedItems();
-            result = " > ID: " + wrap(research.getKey().toString()) + "\n" +
+            result = " > ID: " + wrap(research.getUnlocalizedName()) + "\n" +
                     " > Cost: " + wrap(research.getCost()) + "\n" +
                     " > Items included: " + researchItems.size() + "\n";
         }
@@ -116,7 +122,10 @@ public final class Utils {
     }
 
     public static String recipeGrid(SlimefunItem item) {
-        ItemStack[] recipe = item.getRecipe();
+        return recipeGrid(item.getRecipe());
+    }
+
+    public static String recipeGrid(ItemStack[] recipe) {
         Map<ItemStack, Character> mapper = new HashMap<>();
 
         // Maps each ItemStack to it's corresponding character
@@ -165,6 +174,30 @@ public final class Utils {
         return builder.toString();
     }
 
+    public static String vanillaRecipeGrids(List<Recipe> recipes) {
+        StringBuilder builder = new StringBuilder();
+        for (Recipe recipe : recipes) {
+            if(recipe instanceof ShapedRecipe) {
+                ShapedRecipe shaped = (ShapedRecipe)recipe;
+                builder.append("**Crafting (Shaped**)");
+                builder.append("*Unimplemented by the bot*"); // TODO: finish
+            } else if(recipe instanceof ShapelessRecipe) {
+                ShapelessRecipe shapeless = (ShapelessRecipe)recipe;
+                builder.append("**Crafting (Shapeless)**");
+                builder.append(recipeGrid(shapeless.getIngredientList().toArray(new ItemStack[8])));
+            } else if(recipe instanceof FurnaceRecipe) {
+                FurnaceRecipe furnace = (FurnaceRecipe)recipe;
+                builder.append("**Furnace**");
+                builder.append(" > Input: " + furnace.getInput());
+                builder.append(" > Result: " + furnace.getResult().getItemMeta().getDisplayName());
+            }
+
+            builder.append("\n");
+        }
+
+        return builder.toString();
+    }
+
     public static String getName(ItemStack item) {
         if (item == null) return "null";
 
@@ -182,11 +215,13 @@ public final class Utils {
         String name = ChatColor.stripColor(provided.getItemName().toLowerCase());
         return raw.equalsIgnoreCase(provided.getId())
                 || raw.equalsIgnoreCase(name)
-                || raw.toLowerCase().startsWith(name);
+                || raw.toLowerCase().startsWith(name)
+                || raw.toLowerCase().startsWith(name.replace("_", " "));
     }
 
     public static boolean matches(String raw, Research provided) {
-        return provided.getKey().getKey().equalsIgnoreCase(raw);
+        return provided.getKey().getKey().equalsIgnoreCase(raw) ||
+                provided.getUnlocalizedName().equalsIgnoreCase(raw);
     }
 
     public static String wrap(String string) {
@@ -199,6 +234,10 @@ public final class Utils {
 
     public static String stripColor(String s) {
         return ChatColor.stripColor(s);
+    }
+
+    public static String colorize(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 
     public static EmbedBuilder embed(SlashCommandInteractionEvent event) {
@@ -227,6 +266,10 @@ public final class Utils {
 
         // toIndex exclusive
         return sourceList.subList(fromIndex, Math.min(fromIndex + pageSize, sourceList.size()));
+    }
+
+    public static void sendMessage(CommandSender receiver, String s) {
+        receiver.sendMessage(ChatColor.translateAlternateColorCodes('&', s));
     }
 
 }

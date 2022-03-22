@@ -6,25 +6,22 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import org.jetbrains.annotations.NotNull;
 import tsp.slimebot.SlimeBot;
+import tsp.slimebot.util.Log;
 
 public class BotReadyListener extends ListenerAdapter {
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
-        Guild guild = event.getJDA().getGuildById(SlimeBot.getInstance().getCfg().getString("bot.guildId"));
+        Guild guild = event.getJDA().getGuildById(SlimeBot.getInstance().getConfig().getString("bot.guildId"));
         if (guild == null) {
-            SlimeBot.getInstance().getLogger().severe("Invalid guild id!");
-            SlimeBot.getInstance().stopBot();
+            Log.error("Invalid guild id!");
+            SlimeBot.getInstance().getBot().stopBot();
             return;
         }
 
         guild.upsertCommand("getid", "Retrieve an id.")
                 .addOption(OptionType.CHANNEL, "channel", "Retrieve id of the text channel.")
                 .queue();
-        if (SlimeBot.getInstance().getCfg().getBoolean("debug")) {
-            guild.upsertCommand("shutdown", "Shutdown the bot.")
-                    .queue();
-        }
 
         guild.upsertCommand("player", "Retrieve information about a player.")
                 .addOption(OptionType.STRING, "name", "Player name", true)
@@ -50,6 +47,10 @@ public class BotReadyListener extends ListenerAdapter {
                 .queue();
         guild.upsertCommand("researches", "List all researches.")
                 .addOption(OptionType.INTEGER, "page", "Page")
+                .queue();
+        guild.upsertCommand("addons", "List all installed addons.")
+                .addOption(OptionType.INTEGER, "page", "Page")
+                .addOption(OptionType.BOOLEAN, "detailed", "Detailed list")
                 .queue();
     }
 }

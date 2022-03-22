@@ -17,7 +17,7 @@ public class ItemCommand implements SlimeCommand {
         String rawItem = event.getOption("name").getAsString();
 
         for (SlimefunItem item : Utils.getItems()) {
-            String name = ChatColor.stripColor(item.getItemName());
+            String name = Utils.stripColor(item.getItemName());
             if (Utils.matches(rawItem, item)) {
                 String wiki = item.getWikipage().isPresent() ? item.getWikipage().get() : "";
 
@@ -43,5 +43,10 @@ public class ItemCommand implements SlimeCommand {
                 return;
             }
         }
+
+        event.getHook().editOriginalEmbeds(Utils.embed(event)
+                .setAuthor("Invalid item.")
+                .appendDescription("Could not find item: " + Utils.wrap(rawItem))
+                .build()).queue();
     }
 }
