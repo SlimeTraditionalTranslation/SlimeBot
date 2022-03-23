@@ -6,7 +6,7 @@
 
     <groupId>tsp.slimebot</groupId>
     <artifactId>SlimeBot</artifactId>
-    <version>Efina 1.2.0</version>
+    <version>Efina 1.2.1</version>
 
     <name>SlimeBot</name>
     <description>繁體翻譯版 Discord 機器人用於檢索 Slimefun 的物品資訊.</description>
@@ -90,8 +90,9 @@
                         <configuration>
                             <target>
                                 <propertyfile file="src/main/resources/build.properties" comment="Build information.">
-                                    <entry key="author" default="unknown"/>
-                                    <entry key="number" type="int" default="0" operation="+"/>
+                                    <entry key="author" default="$unknown"/>
+                                    <entry key="number" type="int" default="1" operation="+"/>
+                                    <entry key="version" value="${project.version}"/>
                                     <entry key="compiled" type="date" value="now" pattern="dd-MM-yyyy HH:mm:ss"/>
                                 </propertyfile>
                             </target>
@@ -101,7 +102,26 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
 
+            <!-- Properties -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${basedir}/src/main/resources/build.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
