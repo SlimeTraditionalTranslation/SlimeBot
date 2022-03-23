@@ -28,7 +28,7 @@ public class BuildProperties {
             properties.load(plugin.getResource("build.properties"));
             author = properties.getProperty("author", "unknown");
             number = Integer.parseInt(properties.getProperty("number", "0"));
-            version = plugin.getDescription().getVersion();
+            version = properties.getProperty("version", "unknown");
             compiled = properties.getProperty("compiled", "unknown");
         } catch (IOException ex) {
             Log.debug("Failed to load build properties!");

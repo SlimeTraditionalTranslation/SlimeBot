@@ -25,9 +25,9 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
         instance = this;
         saveDefaultConfig();
         Log.info("Loading SlimeBot - " + getDescription().getVersion());
+        build = new BuildProperties(this);
         update();
 
-        build = new BuildProperties(this);
         commandManager = new CommandManager();
         commandManager.registerDefaults();
         new Metrics(this, 14495);
@@ -56,10 +56,10 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
     }
 
     private void update() {
-        if (getConfig().getBoolean("auto-update", true)) {
+        if (getConfig().getBoolean("auto-update", true) && !build.getAuthor().equalsIgnoreCase("$unknown")) {
             Log.debug("Checking for updates...");
             try {
-                new GitHubBuildsUpdater(this, getFile(), "TheSilentPro/SlimeBot/master").start();
+                new GitHubBuildsUpdater(this, getFile(), build.getAuthor() + "/SlimeBot/master", "Build - ").start();
             } catch (IllegalArgumentException ex) {
                 Log.warning("Failed to get github build.");
                 Log.debug(ex);
