@@ -213,15 +213,22 @@ public final class Utils {
 
     public static boolean matches(String raw, SlimefunItem provided) {
         String name = ChatColor.stripColor(provided.getItemName().toLowerCase());
+        raw = raw.toLowerCase();
         return raw.equalsIgnoreCase(provided.getId())
                 || raw.equalsIgnoreCase(name)
-                || raw.toLowerCase().startsWith(name)
-                || raw.toLowerCase().startsWith(name.replace("_", " "));
+                || raw.startsWith(name)
+                || raw.replace("_", " ").startsWith(name) // Example: "enhanced crafting"
+                || name.contains(raw.replace("_", " ")); // Example: "crafting table" (Enhanced Crafting Table)
     }
 
     public static boolean matches(String raw, Research provided) {
-        return provided.getKey().getKey().equalsIgnoreCase(raw) ||
-                provided.getUnlocalizedName().equalsIgnoreCase(raw);
+        String name = provided.getUnlocalizedName().toLowerCase();
+        raw = raw.toLowerCase();
+        return provided.getKey().getKey().equalsIgnoreCase(raw)
+                || name.equalsIgnoreCase(raw)
+                || name.startsWith(raw)
+                || raw.replace("_", " ").startsWith(name)
+                || name.contains(raw.replace("_", " "));
     }
 
     public static String wrap(String string) {
@@ -269,7 +276,7 @@ public final class Utils {
     }
 
     public static void sendMessage(CommandSender receiver, String s) {
-        receiver.sendMessage(ChatColor.translateAlternateColorCodes('&', s));
+        receiver.sendMessage(colorize(s));
     }
 
 }

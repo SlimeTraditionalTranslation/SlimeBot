@@ -8,18 +8,16 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import tsp.slimebot.util.Utils;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public class AddonsCommand implements SlimeCommand {
+public class AddonsCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "addons";
+    public AddonsCommand() {
+        super("addons");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         OptionMapping pageOption = event.getOption("page");
         int page = 1;
         if (pageOption != null) {

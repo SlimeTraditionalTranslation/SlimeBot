@@ -20,21 +20,16 @@ public class SlimeBotCommand extends MinecraftCommand {
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         TextComponent component = new TextComponent();
-        component.setText(colorize("&7Running &aSlimeBot - ") + build.getVersion());
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/TheSilentPro/SlimeBot"));
+        component.setText(Utils.colorize("&7Running &aSlimeBot - " + build.getVersion() + " &7(&aBuild " + build.getNumber() + "&7)"));
+        component.addExtra(Utils.colorize("\n&7Created by &a" + SlimeBot.getInstance().getDescription().getAuthors()));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/" + build.getAuthor() + "/SlimeBot"));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                 TextComponent.fromLegacyText(
-                "Created by Silent." +
-                "\nClick to visit the GitHub page.")
+                Utils.colorize("&7Click to visit the GitHub page."))
         ));
 
         sender.spigot().sendMessage(component);
-        Utils.sendMessage(sender, "&7Build &a" + build.getNumber() + " &7compiled by &a" + build.getAuthor());
-        Utils.sendMessage(sender, "&7Compiled on &a" + build.getCompiled());
-    }
-
-    private String colorize(String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
+        Utils.sendMessage(sender, "&7Compiled by &a" + build.getAuthor() + " &7on &a" + build.getCompiled());
     }
 
 }

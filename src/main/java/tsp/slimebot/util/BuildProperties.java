@@ -15,6 +15,8 @@ public class BuildProperties {
     private String author;
     private int number;
     private String version;
+    private String slimefun;
+    private String spigot;
     private String compiled;
 
     /**
@@ -29,6 +31,8 @@ public class BuildProperties {
             author = properties.getProperty("author", "unknown");
             number = Integer.parseInt(properties.getProperty("number", "0"));
             version = properties.getProperty("version", "unknown");
+            slimefun = properties.getProperty("slimefun", "unknown");
+            spigot = properties.getProperty("spigot", "unknown");
             compiled = properties.getProperty("compiled", "unknown");
         } catch (IOException ex) {
             Log.debug("Failed to load build properties!");
@@ -61,6 +65,24 @@ public class BuildProperties {
      */
     public String getVersion() {
         return version;
+    }
+
+    /**
+     * Retrieve the slimefun version this build is for.
+     *
+     * @return The slimefun version
+     */
+    public String getSlimefun() {
+        return slimefun;
+    }
+
+    /**
+     * Retrieve the spigot version this build is for.
+     *
+     * @return The spigot version
+     */
+    public String getSpigot() {
+        return spigot;
     }
 
     /**

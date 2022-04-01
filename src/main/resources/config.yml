@@ -4,9 +4,28 @@ bot:
   # If you do not know how to get your guild id, use the command /getid
   guildId: "-1"
 
+# If enabled, commands will be logged in the console
+logCommands: false
+
 # Commands in this list will be disabled
 disabledCommands:
   - "shutdown"
+
+# Discord commands that will respond with an ephemeral message
+# Ephemeral messages are only seen by the command executor (they are still logged if enabled above)
+ephemeral:
+  - "addons"
+  - "getid"
+
+# Roles (IDs) that are required for this command
+# Members will be required to have AT LEAST ONE of these
+#
+# Example
+# roles:
+#   # Command name
+#   addons:
+#     - "ROLE_ID"
+roles: []
 
 # You need to place the channel id below, NOT the name
 announcements:
@@ -16,4 +35,4 @@ announcements:
 auto-update: false
 
 # Debug Mode
-debug: fales
+debug: false

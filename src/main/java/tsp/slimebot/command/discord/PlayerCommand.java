@@ -10,15 +10,14 @@ import tsp.slimebot.util.Utils;
 
 import java.util.Set;
 
-public class PlayerCommand implements SlimeCommand {
+public class PlayerCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "player";
+    public PlayerCommand() {
+      super("player");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         String name = event.getOption("name").getAsString();
 
         PlayerProfile.get(Bukkit.getOfflinePlayer(name), profile -> {

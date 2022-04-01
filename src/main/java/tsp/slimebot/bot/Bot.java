@@ -24,7 +24,7 @@ public final class Bot extends Thread {
         this.token = token;
     }
 
-    public void startBot() {
+    public boolean startBot() {
         stopBot();
 
         try {
@@ -34,13 +34,16 @@ public final class Bot extends Thread {
                     .addEventListeners(new BotShutdownListener())
                     .addEventListeners(new DiscordCommandListener())
                     .build();
-        } catch (LoginException e) {
-            e.printStackTrace();
+        } catch (LoginException ex) {
+            Log.error("Bot failed to login! Make sure the token is correct inside the config.");
+            Log.error(ex);
+            return false;
         }
 
         Log.debug("Bot is running on thread: " + getName() + " (ID: " + getId() + ")");
         Log.info(ChatColor.GREEN + "Bot is running on account: " + jda.getSelfUser().getAsTag());
         Log.info(ChatColor.GREEN + "Invite: " + jda.getInviteUrl(Permission.ADMINISTRATOR, Permission.USE_APPLICATION_COMMANDS));
+        return true;
     }
 
     public void stopBot() {

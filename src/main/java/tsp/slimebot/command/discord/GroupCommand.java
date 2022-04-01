@@ -8,15 +8,14 @@ import tsp.slimebot.util.Utils;
 import java.util.List;
 import java.util.Optional;
 
-public class GroupCommand implements SlimeCommand {
+public class GroupCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "group";
+    public GroupCommand() {
+        super("group");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         String name = event.getOption("name").getAsString();
         List<ItemGroup> groups = Slimefun.getRegistry().getAllItemGroups();
         Optional<ItemGroup> group = groups.stream()

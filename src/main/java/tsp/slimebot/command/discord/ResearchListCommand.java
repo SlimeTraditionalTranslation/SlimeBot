@@ -9,15 +9,14 @@ import tsp.slimebot.util.Utils;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResearchListCommand implements SlimeCommand {
+public class ResearchListCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "researches";
+    public ResearchListCommand() {
+      super("researches");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         OptionMapping pageOption = event.getOption("page");
         int page = 1;
         if (pageOption != null) {
