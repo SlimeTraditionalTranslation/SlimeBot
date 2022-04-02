@@ -20,21 +20,16 @@ public class SlimeBotCommand extends MinecraftCommand {
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         TextComponent component = new TextComponent();
-        component.setText(colorize("&7正在運行&a黏液機器人 - ") + build.getVersion());
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/SlimeTraditionalTranslation/SlimeBot"));
+        component.setText(Utils.colorize("&7正在運行&a黏液機器人 - " + build.getVersion() + " &7(&a建構 " + build.getNumber() + "&7)"));
+        component.addExtra(Utils.colorize("\n&7由 &a" + SlimeBot.getInstance().getDescription().getAuthors() + " &7製作"));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/" + build.getAuthor() + "/SlimeBot"));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                 TextComponent.fromLegacyText(
-                "由 Silent 製作." +
-                "\n點擊查看.")
+                Utils.colorize("&7點擊查看 GitHub 頁面."))
         ));
 
         sender.spigot().sendMessage(component);
-        Utils.sendMessage(sender, "&7建構 &a" + build.getNumber() + " &7由 &a" + build.getAuthor() + " &7進行編譯");
-        Utils.sendMessage(sender, "&7編譯於 &a" + build.getCompiled());
-    }
-
-    private String colorize(String s) {
-        return ChatColor.translateAlternateColorCodes('&', s);
+        Utils.sendMessage(sender, "&7建構由 &a" + build.getAuthor() + " &7進行編譯 &a" + build.getCompiled());
     }
 
 }

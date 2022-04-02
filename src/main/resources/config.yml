@@ -4,9 +4,28 @@ bot:
   # 如果你不知道如何獲取你自己的 Discord 伺服器ID, 可以在伺服器中使用此指令 /getid
   guildId: "-1"
 
+# 如果啟用, 指令運行記錄將會在後臺顯示
+logCommands: false
+
 # 此列表中的指令將會被停用
 disabledCommands:
   - "shutdown"
+
+# 將以短時間顯示指令來回應 Discord 指令
+# 臨時訊息僅由發送指令者才能看到 (如果啟用 logCommands, 仍然會被記錄下來)
+ephemeral:
+  - "addons"
+  - "getid"
+
+# 指令執行所需要的 Discord 身分組 (ID)
+# 成員必須擁有所設定的其中一個身分組
+#
+# 範例
+# roles:
+#   # 指令名稱
+#   addons:
+#     - "ROLE_ID"
+roles: []
 
 # 你必須在底下放置頻道ID, 而不是頻道名稱
 announcements:
@@ -16,4 +35,4 @@ announcements:
 auto-update: false
 
 # Debug 模式
-debug: fales
+debug: false

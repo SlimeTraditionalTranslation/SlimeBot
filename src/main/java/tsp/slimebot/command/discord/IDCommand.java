@@ -9,15 +9,14 @@ import tsp.slimebot.util.Utils;
 /**
  * Convenience command for getting the id of a {@link Guild}.
  */
-public class IDCommand implements SlimeCommand {
+public class IDCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "getid";
+    public IDCommand() {
+        super("getid");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         Guild guild = event.getGuild();
         if (guild == null) {
             event.getHook().editOriginalEmbeds(Utils.embed(event)

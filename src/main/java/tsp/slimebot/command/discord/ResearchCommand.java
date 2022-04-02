@@ -7,15 +7,14 @@ import tsp.slimebot.util.Utils;
 
 import java.util.Optional;
 
-public class ResearchCommand implements SlimeCommand {
+public class ResearchCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "research";
+    public ResearchCommand() {
+      super("research");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         String rawResearch = event.getOption("name").getAsString();
 
         Optional<Research> research = Slimefun.getRegistry().getResearches().stream()
@@ -26,12 +25,12 @@ public class ResearchCommand implements SlimeCommand {
         if (research.isPresent()) {
             result = Utils.research(research.get());
         } else {
-            result = "沒有這個研究鍵: " + Utils.wrap(rawResearch);
+            result = "未找到研究: " + Utils.wrap(rawResearch);
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
                 .setAuthor(research
-                        .map(r -> r.getKey().getKey().toUpperCase())
+                        .map(r -> r.getUnlocalizedName())
                         .orElse("未知研究."))
                 .appendDescription(result)
                 .build()).queue();

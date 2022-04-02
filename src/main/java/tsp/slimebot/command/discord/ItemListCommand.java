@@ -14,15 +14,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ItemListCommand implements SlimeCommand {
+public class ItemListCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "items";
+    public ItemListCommand() {
+      super("items");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         OptionMapping pageMapping = event.getOption("page");
         OptionMapping typeMapping = event.getOption("type");
 

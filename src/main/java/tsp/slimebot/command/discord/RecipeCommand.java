@@ -4,15 +4,14 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import tsp.slimebot.util.Utils;
 
-public class RecipeCommand implements SlimeCommand {
+public class RecipeCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "recipe";
+    public RecipeCommand() {
+      super("recipe");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         String rawItem = event.getOption("name").getAsString();
 
         for (SlimefunItem item : Utils.getItems()) {

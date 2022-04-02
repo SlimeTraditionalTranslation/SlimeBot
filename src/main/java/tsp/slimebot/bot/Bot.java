@@ -24,7 +24,7 @@ public final class Bot extends Thread {
         this.token = token;
     }
 
-    public void startBot() {
+    public boolean startBot() {
         stopBot();
 
         try {
@@ -34,13 +34,16 @@ public final class Bot extends Thread {
                     .addEventListeners(new BotShutdownListener())
                     .addEventListeners(new DiscordCommandListener())
                     .build();
-        } catch (LoginException e) {
-            e.printStackTrace();
+        } catch (LoginException ex) {
+            Log.error("機器人登入失敗! 請確認在 config 中的機器人 token 是正確的.");
+            Log.error(ex);
+            return false;
         }
 
         Log.debug("機器人在線程運行: " + getName() + " (ID: " + getId() + ")");
         Log.info(ChatColor.GREEN + "機器人正在此帳戶上運行: " + jda.getSelfUser().getAsTag());
         Log.info(ChatColor.GREEN + "邀請連結: " + jda.getInviteUrl(Permission.ADMINISTRATOR, Permission.USE_APPLICATION_COMMANDS));
+        return true;
     }
 
     public void stopBot() {

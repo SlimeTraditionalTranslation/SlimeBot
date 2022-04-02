@@ -8,15 +8,14 @@ import tsp.slimebot.util.Utils;
 
 import java.util.stream.Collectors;
 
-public class GroupListCommand implements SlimeCommand {
+public class GroupListCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "groups";
+    public GroupListCommand() {
+        super("groups");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         OptionMapping pageOption = event.getOption("page");
         int page = 1;
         if (pageOption != null) {

@@ -5,15 +5,14 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import org.bukkit.ChatColor;
 import tsp.slimebot.util.Utils;
 
-public class ItemCommand implements SlimeCommand {
+public class ItemCommand extends SlimeCommand {
 
-    @Override
-    public String getName() {
-        return "item";
+    public ItemCommand() {
+      super("item");
     }
 
     @Override
-    public void onCommand(SlashCommandInteractionEvent event) {
+    public void handle(SlashCommandInteractionEvent event) {
         String rawItem = event.getOption("name").getAsString();
 
         for (SlimefunItem item : Utils.getItems()) {

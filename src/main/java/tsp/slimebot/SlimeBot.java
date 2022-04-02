@@ -24,17 +24,21 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
-        Log.info("正在加載黏液機器人 - " + getDescription().getVersion());
         build = new BuildProperties(this);
+        Log.info("加載 SlimeBot - " + build.getVersion() + " (建構 " + build.getNumber() + ")");
+        initMetrics();
         update();
 
-        commandManager = new CommandManager();
-        commandManager.registerDefaults();
-        new Metrics(this, 14495);
+        Log.info("[建構依賴]: Spigot: " + build.getSpigot() + " | Slimefun: " + build.getSlimefun());
+
+        commandManager = new CommandManager(true);
 
         this.bot = new Bot(getConfig().getString("bot.token"));
         this.bot.start();
-        this.bot.startBot();
+        if (!this.bot.startBot()) {
+            this.setEnabled(false);
+            return;
+        }
 
         new SlimeBotCommand();
 
@@ -53,18 +57,6 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
 
     public JDA getJDA() {
         return bot.getJda();
-    }
-
-    private void update() {
-        if (getConfig().getBoolean("auto-update", true) && !build.getAuthor().equalsIgnoreCase("$unknown")) {
-            Log.debug("Checking for updates...");
-            try {
-                new GitHubBuildsUpdater(this, getFile(), build.getAuthor() + "/SlimeBot/master", "Build - ").start();
-            } catch (IllegalArgumentException ex) {
-                Log.warning("Failed to get github build.");
-                Log.debug(ex);
-            }
-        }
     }
 
     public CommandManager getCommandManager() {
@@ -90,6 +82,24 @@ public class SlimeBot extends JavaPlugin implements SlimefunAddon {
     @Override
     public String getBugTrackerURL() {
         return "https://github.com/SlimeTraditionalTranslation/SlimeBot/issues";
+    }
+
+    private void update() {
+        if (getConfig().getBoolean("auto-update", true) && !build.getAuthor().equalsIgnoreCase("$unknown")) {
+            Log.debug("Checking for updates...");
+            try {
+                new GitHubBuildsUpdater(this, getFile(), build.getAuthor() + "/SlimeBot/master", "Build - ").start();
+            } catch (IllegalArgumentException ex) {
+                Log.warning("Failed to get github build.");
+                Log.debug(ex);
+            }
+        }
+    }
+
+    private void initMetrics() {
+        Metrics metrics = new Metrics(this, 14495);
+        metrics.addCustomChart(new Metrics.SimplePie("release_version", () -> build.getVersion()));
+        metrics.addCustomChart(new Metrics.SimplePie("build_version", () -> String.valueOf(build.getNumber())));
     }
 
 }

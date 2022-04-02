@@ -13,4 +13,4 @@
 只需要將 jar 放入你的 ``plugins`` 資料夾中, 並在開啟生成設定資料夾, 並在 ``config.yml`` 中填寫機器人的 token.
 
 # 資訊 & 指令 (官方的英文頁面)
-https://slimewiki.pages.dev/
+https://slimebot.pages.dev/
