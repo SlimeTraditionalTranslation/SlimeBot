@@ -51,17 +51,17 @@ public final class Utils {
         if (list.get(0) instanceof Research) {
             for (Object entry : list) {
                 Research research = (Research) entry;
-                builder.append("**" + research.getKey().getKey().toUpperCase() + "**")
-                        .append("\n > Namespace: " + wrap(research.getKey().getNamespace()))
-                        .append("\n > Items included: " + research.getAffectedItems().size())
+                builder.append("**" + research.getUnlocalizedName() + "**")
+                        .append("\n > ID: " + wrap(research.getKey().toString()))
+                        .append("\n > Items included: " + wrap(research.getAffectedItems().size()))
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof ItemGroup) {
             for (Object entry : list) {
                 ItemGroup group = (ItemGroup) entry;
                 builder.append("**" + group.getUnlocalizedName() + "**")
-                        .append("\n > Tier: " + group.getTier())
-                        .append("\n > Items included: " + group.getItems().size())
+                        .append("\n > Tier: " + wrap(group.getTier()))
+                        .append("\n > Items included: " + wrap(group.getItems().size()))
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof SlimefunItem) {
@@ -104,7 +104,8 @@ public final class Utils {
         String result = "None" + "\n";
         if (research != null) {
             List<SlimefunItem> researchItems = research.getAffectedItems();
-            result = " > ID: " + wrap(research.getUnlocalizedName()) + "\n" +
+            result = " > ID: " + wrap(research.getKey().toString()) + "\n" +
+                    " > Name: " + wrap(research.getUnlocalizedName()) + "\n" +
                     " > Cost: " + wrap(research.getCost()) + "\n" +
                     " > Items included: " + researchItems.size() + "\n";
         }

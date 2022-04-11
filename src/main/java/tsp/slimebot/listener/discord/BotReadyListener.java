@@ -40,10 +40,10 @@ public class BotReadyListener extends ListenerAdapter {
                 .addOption(OptionType.INTEGER, "page", "Page")
                 .queue();
         guild.upsertCommand("recipe", "Retrieve information about a recipe")
-                .addOption(OptionType.STRING, "name", "Item name")
+                .addOption(OptionType.STRING, "name", "Item name", true)
                 .queue();
         guild.upsertCommand("research", "Retrieve information about a research")
-                .addOption(OptionType.STRING, "name", "Research key")
+                .addOption(OptionType.STRING, "name", "Research key", true)
                 .queue();
         guild.upsertCommand("researches", "List all researches.")
                 .addOption(OptionType.INTEGER, "page", "Page")
