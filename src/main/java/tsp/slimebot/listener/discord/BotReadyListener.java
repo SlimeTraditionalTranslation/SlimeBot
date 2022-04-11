@@ -40,10 +40,10 @@ public class BotReadyListener extends ListenerAdapter {
                 .addOption(OptionType.INTEGER, "page", "頁面")
                 .queue();
         guild.upsertCommand("recipe", "檢索有關配方的資訊")
-                .addOption(OptionType.STRING, "name", "物品名稱")
+                .addOption(OptionType.STRING, "name", "物品名稱", true)
                 .queue();
         guild.upsertCommand("research", "檢索有關研究的資訊")
-                .addOption(OptionType.STRING, "name", "研究鍵")
+                .addOption(OptionType.STRING, "name", "研究鍵", true)
                 .queue();
         guild.upsertCommand("researches", "列出所有的研究.")
                 .addOption(OptionType.INTEGER, "page", "頁面")

@@ -51,17 +51,17 @@ public final class Utils {
         if (list.get(0) instanceof Research) {
             for (Object entry : list) {
                 Research research = (Research) entry;
-                builder.append("**" + research.getKey().getKey().toUpperCase() + "**")
-                        .append("\n > 命名空間: " + wrap(research.getKey().getNamespace()))
-                        .append("\n > 包含物品: " + research.getAffectedItems().size())
+                builder.append("**" + research.getUnlocalizedName() + "**")
+                        .append("\n > ID: " + wrap(research.getKey().toString()))
+                        .append("\n > 包含物品: " + wrap(research.getAffectedItems().size()))
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof ItemGroup) {
             for (Object entry : list) {
                 ItemGroup group = (ItemGroup) entry;
                 builder.append("**" + group.getUnlocalizedName() + "**")
-                        .append("\n > 等級: " + group.getTier())
-                        .append("\n > 包含物品: " + group.getItems().size())
+                        .append("\n > 等級: " + wrap(group.getTier()))
+                        .append("\n > 包含物品: " + wrap(group.getItems().size()))
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof SlimefunItem) {
@@ -104,7 +104,8 @@ public final class Utils {
         String result = "無" + "\n";
         if (research != null) {
             List<SlimefunItem> researchItems = research.getAffectedItems();
-            result = " > ID: " + wrap(research.getUnlocalizedName()) + "\n" +
+            result = " > ID: " + wrap(research.getKey().toString()) + "\n" +
+                    " > 名稱: " + wrap(research.getUnlocalizedName()) + "\n" +
                     " > 消耗: " + wrap(research.getCost()) + "\n" +
                     " > 包含物品: " + researchItems.size() + "\n";
         }

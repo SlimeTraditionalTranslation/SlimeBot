@@ -30,7 +30,7 @@ public class ResearchCommand extends SlimeCommand {
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
                 .setAuthor(research
-                        .map(r -> r.getUnlocalizedName())
+                        .map(Research::getUnlocalizedName)
                         .orElse("未知研究."))
                 .appendDescription(result)
                 .build()).queue();
