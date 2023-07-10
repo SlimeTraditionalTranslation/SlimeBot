@@ -2,6 +2,7 @@ package tsp.slimebot.command.discord;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 public class RecipeCommand extends SlimeCommand {
@@ -21,7 +22,7 @@ public class RecipeCommand extends SlimeCommand {
 
                 event.getHook().editOriginalEmbeds(Utils.embed(event)
                         .setAuthor(name, !wiki.isEmpty() ? wiki : "https://github.com/Slimefun/Slimefun4/wiki")
-                        .appendDescription("**配方**" + "\n")
+                        .appendDescription(GetText.tr("**Recipe**") + "\n")
                         .appendDescription(Utils.recipe(item) + "\n")
                         .appendDescription(Utils.recipeGrid(item))
                         .build()
@@ -31,9 +32,9 @@ public class RecipeCommand extends SlimeCommand {
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setTitle("未知物品.")
-                .appendDescription("這個物品並不存在!" + "\n")
-                .appendDescription("範例物品: `背包`")
+                .setTitle(GetText.tr("Invalid item."))
+                .appendDescription(GetText.tr("That item does not exist!") + "\n")
+                .appendDescription(GetText.tr("Example item: `backpack`"))
                 .build()).queue();
     }
 }

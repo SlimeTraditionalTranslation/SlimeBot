@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 import java.util.Arrays;
@@ -32,29 +33,29 @@ public class AddonsCommand extends SlimeCommand {
             PluginDescriptionFile description = plugin.getDescription();
 
             builder.append("**" + plugin.getName() + "**");
-            builder.append("\n> 介紹: " + fromNullable(description.getDescription()));
-            builder.append("\n> 版本: " + fromNullable(description.getVersion()));
-            builder.append("\n> 作者: " + fromNullable(String.join(", ", description.getAuthors())));
-            builder.append("\n> 網站: " + fromNullable(description.getWebsite()));
+            builder.append("\n" + GetText.tr("> Description: ") + fromNullable(description.getDescription()));
+            builder.append("\n" + GetText.tr("> Version: ") + fromNullable(description.getVersion()));
+            builder.append("\n" + GetText.tr("> Authors: ") + fromNullable(String.join(GetText.tr(", "), description.getAuthors())));
+            builder.append("\n" + GetText.tr("> Website: ") + fromNullable(description.getWebsite()));
 
             if (detailed) {
-                builder.append("\n> 主要: " + fromNullable(description.getMain()));
-                builder.append("\n> API版本: " + fromNullable(description.getAPIVersion()));
-                builder.append("\n> 加載: " + fromNullable(description.getLoad().name()));
-                builder.append("\n> 函式庫: " + fromNullable(description.getLibraries().toString()));
+                builder.append("\n" + GetText.tr("> Main: ") + fromNullable(description.getMain()));
+                builder.append("\n" + GetText.tr("> API Version: ") + fromNullable(description.getAPIVersion()));
+                builder.append("\n" + GetText.tr("> Load: ") + fromNullable(description.getLoad().name()));
+                builder.append("\n" + GetText.tr("> Libraries: ") + fromNullable(description.getLibraries().toString()));
             }
 
             builder.append("\n\n");
         }
 
-        event.getHook().editOriginalEmbeds(Utils.embed(event).setAuthor("已安裝的附加 (" + addons.size() + ") | 頁面: " + page)
+        event.getHook().editOriginalEmbeds(Utils.embed(event).setAuthor(GetText.tr("Installed Addons (") + addons.size() + GetText.tr(") | Page: ") + page)
                 .appendDescription(builder.toString())
                 .build()).queue();
     }
 
     private String fromNullable(String s) {
         if (s == null) {
-            return Utils.wrap("None");
+            return Utils.wrap(GetText.tr("None"));
         }
 
         return Utils.wrap(s);

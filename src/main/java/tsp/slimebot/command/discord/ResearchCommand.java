@@ -3,6 +3,7 @@ package tsp.slimebot.command.discord;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 import java.util.Optional;
@@ -25,13 +26,13 @@ public class ResearchCommand extends SlimeCommand {
         if (research.isPresent()) {
             result = Utils.research(research.get());
         } else {
-            result = "未找到研究: " + Utils.wrap(rawResearch);
+            result = GetText.tr("No research found for: ") + Utils.wrap(rawResearch);
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
                 .setAuthor(research
                         .map(Research::getUnlocalizedName)
-                        .orElse("未知研究."))
+                        .orElse(GetText.tr("Invalid research.")))
                 .appendDescription(result)
                 .build()).queue();
     }

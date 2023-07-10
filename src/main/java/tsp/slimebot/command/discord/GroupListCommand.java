@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class GroupListCommand extends SlimeCommand {
                 .collect(Collectors.toList()), page, 10));
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("組別 | 頁面: " + page)
+                .setAuthor(GetText.tr("Groups | Page: ") + page)
                 .appendDescription(result)
                 .build()).queue();
     }

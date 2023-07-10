@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.ChatColor;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.listener.discord.BotReadyListener;
 import tsp.slimebot.listener.discord.BotShutdownListener;
 import tsp.slimebot.listener.discord.DiscordCommandListener;
@@ -34,15 +35,16 @@ public final class Bot extends Thread {
                     .addEventListeners(new BotShutdownListener())
                     .addEventListeners(new DiscordCommandListener())
                     .build();
-        } catch (LoginException ex) {
-            Log.error("機器人登入失敗! 請確認在 config 中的機器人 token 是正確的.");
+        } catch (Exception ex) {
+            Log.error(GetText.tr("Bot failed to login! Make sure the token is correct inside the config."));
             Log.error(ex);
             return false;
         }
 
-        Log.debug("機器人在線程運行: " + getName() + " (ID: " + getId() + ")");
-        Log.info(ChatColor.GREEN + "機器人正在此帳戶上運行: " + jda.getSelfUser().getAsTag());
-        Log.info(ChatColor.GREEN + "邀請連結: " + jda.getInviteUrl(Permission.ADMINISTRATOR, Permission.USE_APPLICATION_COMMANDS));
+
+        Log.debug(GetText.tr("Bot is running on thread: ") + getName() + GetText.tr(" (ID: {0})", getId()));
+        Log.info(ChatColor.GREEN + GetText.tr("Bot is running on account: ") + jda.getSelfUser().getName());
+        Log.info(ChatColor.GREEN + GetText.tr("Invite: ") + jda.getInviteUrl(Permission.ADMINISTRATOR, Permission.USE_APPLICATION_COMMANDS));
         return true;
     }
 

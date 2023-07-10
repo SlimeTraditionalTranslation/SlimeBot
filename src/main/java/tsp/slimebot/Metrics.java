@@ -46,6 +46,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mini2Dx.gettext.GetText;
 
 class Metrics {
 
@@ -76,16 +77,18 @@ class Metrics {
             config
                     .options()
                     .header(
-                            "bStats (https://bStats.org) 為插件作者收集一些基礎資訊, 例如\n"
-                                    + "有多少人使用他們的插件以及他們總玩家人數. 建議繼續保持 bStats 啟用,\n"
-                                    + "如果你對這個收集感到不舒服, 你也可以將此設定關閉.\n"
-                                    + "啟用指標不會造成效能損失, 且發送到\n"
-                                    + "bStats 的資料是完全匿名的.")
+                            GetText.tr("bStats (https://bStats.org) collects some basic information for plugin authors, like how\n")
+                                    + GetText.tr("many people use their plugin and their total player count. It's recommended to keep bStats\n")
+                                    + GetText.tr("enabled, but if you're not comfortable with this, you can turn this setting off. There is no\n")
+                                    + GetText.tr("performance penalty associated with having metrics enabled, and data sent to bStats is fully\n")
+                                    + GetText.tr("anonymous."))
                     .copyDefaults(true);
+            /* Disabled due to mixing bStats config with bot config
             try {
                 plugin.getConfig().save(configFile);
             } catch (IOException ignored) {
             }
+            */
         }
         // Load the data
         boolean enabled = plugin.getConfig().getBoolean("enabled", true);

@@ -3,6 +3,7 @@ package tsp.slimebot.command.discord;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class GroupCommand extends SlimeCommand {
                 .filter(g -> g.getUnlocalizedName().equalsIgnoreCase(name))
                 .findFirst();
 
-        String result = "無.";
+        String result = GetText.tr("None.");
         if (group.isPresent()) {
             result = Utils.category(group.get());
         }

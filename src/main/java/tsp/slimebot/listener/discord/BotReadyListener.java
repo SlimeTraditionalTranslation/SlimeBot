@@ -1,10 +1,11 @@
 package tsp.slimebot.listener.discord;
 
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import org.jetbrains.annotations.NotNull;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.SlimeBot;
 import tsp.slimebot.util.Log;
 
@@ -14,43 +15,43 @@ public class BotReadyListener extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
         Guild guild = event.getJDA().getGuildById(SlimeBot.getInstance().getConfig().getString("bot.guildId"));
         if (guild == null) {
-            Log.error("未知 Discord 伺服器ID!");
+            Log.error(GetText.tr("Invalid guild id!"));
             SlimeBot.getInstance().getBot().stopBot();
             return;
         }
 
-        guild.upsertCommand("getid", "檢索ID.")
-                .addOption(OptionType.CHANNEL, "channel", "檢索文字頻道ID.")
+        guild.upsertCommand("getid", GetText.tr("Retrieve an id."))
+                .addOption(OptionType.CHANNEL, "channel", GetText.tr("Retrieve id of the text channel."))
                 .queue();
 
-        guild.upsertCommand("player", "檢索有關玩家的資訊.")
-                .addOption(OptionType.STRING, "name", "玩家名稱", true)
+        guild.upsertCommand("player", GetText.tr("Retrieve information about a player."))
+                .addOption(OptionType.STRING, "name", GetText.tr("Player name"), true)
                 .queue();
-        guild.upsertCommand("group", "檢索有關組別的資訊 (類別).")
-                .addOption(OptionType.STRING, "name", "組別名稱", true)
+        guild.upsertCommand("group", GetText.tr("Retrieve information about a group (category)."))
+                .addOption(OptionType.STRING, "name", GetText.tr("Group name"), true)
                 .queue();
-        guild.upsertCommand("groups", "列出所有組別.")
-                .addOption(OptionType.INTEGER, "page", "頁面")
+        guild.upsertCommand("groups", GetText.tr("List all groups."))
+                .addOption(OptionType.INTEGER, "page", GetText.tr("Page"))
                 .queue();
-        guild.upsertCommand("item", "檢索有關物品的詳細資訊.")
-                .addOption(OptionType.STRING, "name", "物品名稱", true)
+        guild.upsertCommand("item", GetText.tr("Retrieve detailed information about an item."))
+                .addOption(OptionType.STRING, "name", GetText.tr("Item name"), true)
                 .queue();
-        guild.upsertCommand("items", "列出所有物品")
+        guild.upsertCommand("items", GetText.tr("List all items"))
                 .addOption(OptionType.STRING, "type", "ALL|ENABLED|DISABLED|RADIOACTIVE|a:ADDON|r:RESEARCH")
-                .addOption(OptionType.INTEGER, "page", "頁面")
+                .addOption(OptionType.INTEGER, "page", GetText.tr("Page"))
                 .queue();
-        guild.upsertCommand("recipe", "檢索有關配方的資訊")
-                .addOption(OptionType.STRING, "name", "物品名稱", true)
+        guild.upsertCommand("recipe", GetText.tr("Retrieve information about a recipe"))
+                .addOption(OptionType.STRING, "name", GetText.tr("Item name"), true)
                 .queue();
-        guild.upsertCommand("research", "檢索有關研究的資訊")
-                .addOption(OptionType.STRING, "name", "研究鍵", true)
+        guild.upsertCommand("research", GetText.tr("Retrieve information about a research"))
+                .addOption(OptionType.STRING, "name", GetText.tr("Research key"), true)
                 .queue();
-        guild.upsertCommand("researches", "列出所有的研究.")
-                .addOption(OptionType.INTEGER, "page", "頁面")
+        guild.upsertCommand("researches", GetText.tr("List all researches."))
+                .addOption(OptionType.INTEGER, "page", GetText.tr("Page"))
                 .queue();
-        guild.upsertCommand("addons", "列出所有已安裝的附加.")
-                .addOption(OptionType.INTEGER, "page", "頁面")
-                .addOption(OptionType.BOOLEAN, "detailed", "詳細列表")
+        guild.upsertCommand("addons", GetText.tr("List all installed addons."))
+                .addOption(OptionType.INTEGER, "page", GetText.tr("Page"))
+                .addOption(OptionType.BOOLEAN, "detailed", GetText.tr("Detailed list"))
                 .queue();
     }
 }

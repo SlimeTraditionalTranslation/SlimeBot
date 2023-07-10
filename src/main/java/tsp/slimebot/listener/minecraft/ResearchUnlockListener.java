@@ -3,8 +3,9 @@ package tsp.slimebot.listener.minecraft;
 import io.github.thebusybiscuit.slimefun4.api.events.ResearchUnlockEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import org.bukkit.event.EventHandler;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.SlimeBot;
 import tsp.slimebot.util.Log;
 import tsp.slimebot.util.Utils;
@@ -28,12 +29,12 @@ public class ResearchUnlockListener extends MinecraftListener {
 
         TextChannel channel = jda.getTextChannelById(id);
         if (channel == null) {
-            Log.warning("未知的頻道ID: " + id);
+            Log.warning(GetText.tr("Invalid channel id: ") + id);
             return;
         }
 
         channel.sendMessageEmbeds(new EmbedBuilder()
-                .setAuthor(":book:" + event.getPlayer().getName() + " 解鎖了一項研究!")
+                .setAuthor("\uD83D\uDCD6" + GetText.tr(" {0} unlocked a research!", event.getPlayer().getName()))
                 .appendDescription(Utils.research(event.getResearch()))
                 .setTimestamp(Instant.now())
                 .build()).queue();

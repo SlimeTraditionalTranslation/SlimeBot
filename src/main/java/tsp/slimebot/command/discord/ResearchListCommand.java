@@ -4,6 +4,7 @@ import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class ResearchListCommand extends SlimeCommand {
         String result = Utils.asString(Utils.getPage(researches, page, 10));
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("研究 | 頁面: " + page)
+                .setAuthor(GetText.tr("Researches | Page: ") + page)
                 .appendDescription(result.substring(0, Math.min(result.length(), 4096)))
                 .build())
                 .queue();

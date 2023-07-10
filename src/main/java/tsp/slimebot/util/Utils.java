@@ -1,5 +1,7 @@
 package tsp.slimebot.util;
 
+import de.unpixelt.locale.Locale;
+import de.unpixelt.locale.Translate;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
@@ -14,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.mini2Dx.gettext.GetText;
 
 import java.awt.Color;
 import java.time.Instant;
@@ -52,22 +55,22 @@ public final class Utils {
             for (Object entry : list) {
                 Research research = (Research) entry;
                 builder.append("**" + research.getUnlocalizedName() + "**")
-                        .append("\n > ID: " + wrap(research.getKey().toString()))
-                        .append("\n > 包含物品: " + wrap(research.getAffectedItems().size()))
+                        .append("\n" + GetText.tr(" > ID: ") + wrap(research.getKey().toString()))
+                        .append("\n" + GetText.tr(" > Items included: ") + wrap(research.getAffectedItems().size()))
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof ItemGroup) {
             for (Object entry : list) {
                 ItemGroup group = (ItemGroup) entry;
                 builder.append("**" + group.getUnlocalizedName() + "**")
-                        .append("\n > 等級: " + wrap(group.getTier()))
-                        .append("\n > 包含物品: " + wrap(group.getItems().size()))
+                        .append("\n" + GetText.tr(" > Tier: ") + wrap(group.getTier()))
+                        .append("\n" + GetText.tr(" > Items included: ") + wrap(group.getItems().size()))
                         .append("\n\n");
             }
         } else if (list.get(0) instanceof SlimefunItem) {
             for (Object entry : list) {
                 SlimefunItem item = (SlimefunItem) entry;
-                builder.append(Utils.wrap(stripColor(item.getItemName()))).append(",");
+                builder.append(Utils.wrap(stripColor(item.getItemName()))).append(GetText.tr(","));
             }
         }
 
@@ -75,7 +78,7 @@ public final class Utils {
     }
 
     public static String description(SlimefunItem item) {
-        List<String> lore = item.getItem().getItemMeta().hasLore() ? item.getItem().getItemMeta().getLore() : Collections.singletonList("無");
+        List<String> lore = item.getItem().getItemMeta().hasLore() ? item.getItem().getItemMeta().getLore() : Collections.singletonList(GetText.tr("None"));
         StringBuilder description = new StringBuilder();
         for (String line : lore) {
             description.append(stripColor(line)).append("\n");
@@ -85,29 +88,29 @@ public final class Utils {
     }
 
     public static String information(SlimefunItem item) {
-        String wiki = item.getWikipage().isPresent() ? item.getWikipage().get() : "無" + "\n";
-        return " > ID: " + wrap(item.getId()) + "\n" +
-                " > 附加: " + wrap(item.getAddon().getName()) + "\n" +
-                " > 狀態: " + wrap(item.getState().name()) + "\n" +
-                " > Wiki: " + wiki + "\n";
+        String wiki = item.getWikipage().isPresent() ? item.getWikipage().get() : GetText.tr("None") + "\n";
+        return GetText.tr(" > ID: ") + wrap(item.getId()) + "\n" +
+                GetText.tr(" > Addon: ") + wrap(item.getAddon().getName()) + "\n" +
+                GetText.tr(" > State: ") + wrap(item.getState().name()) + "\n" +
+                GetText.tr(" > Wiki: ") + wiki + "\n";
     }
 
     public static String category(ItemGroup group) {
-        String origin = group.getAddon() != null ? group.getAddon().getName() : "無" + "\n";
-        return " > ID: " + wrap(group.getKey().toString()) + "\n" +
-                " > 名稱: " + wrap(group.getUnlocalizedName()) + "\n" +
-                " > 等級: " + wrap(group.getTier()) + "\n" +
-                " > 附加: " + wrap(origin) + "\n";
+        String origin = group.getAddon() != null ? group.getAddon().getName() : GetText.tr("None") + "\n";
+        return GetText.tr(" > ID: ") + wrap(group.getKey().toString()) + "\n" +
+                GetText.tr(" > Name: ") + wrap(group.getUnlocalizedName()) + "\n" +
+                GetText.tr(" > Tier: ") + wrap(group.getTier()) + "\n" +
+                GetText.tr(" > Addon: ") + wrap(origin) + "\n";
     }
 
     public static String research(Research research) {
-        String result = "無" + "\n";
+        String result = GetText.tr("None") + "\n";
         if (research != null) {
             List<SlimefunItem> researchItems = research.getAffectedItems();
-            result = " > ID: " + wrap(research.getKey().toString()) + "\n" +
-                    " > 名稱: " + wrap(research.getUnlocalizedName()) + "\n" +
-                    " > 消耗: " + wrap(research.getCost()) + "\n" +
-                    " > 包含物品: " + researchItems.size() + "\n";
+            result = GetText.tr(" > ID: ") + wrap(research.getKey().toString()) + "\n" +
+                    GetText.tr(" > Name: ") + wrap(research.getUnlocalizedName()) + "\n" +
+                    GetText.tr(" > Cost: ") + wrap(research.getCost()) + "\n" +
+                    GetText.tr(" > Items included: ") + researchItems.size() + "\n";
         }
 
         return result;
@@ -115,11 +118,11 @@ public final class Utils {
 
     public static String recipe(SlimefunItem item) {
         SlimefunItem machine = item.getRecipeType().getMachine();
-        String name = machine != null ? machine.getItemName() : "未知";
+        String name = machine != null ? machine.getItemName() : GetText.tr("Unknown");
 
-        return " > 機器ID: " + wrap(item.getRecipeType().getKey().toString()) + "\n" +
-                " > 機器: " + wrap(stripColor(name)) + "\n" +
-                " > 輸出 (" + item.getRecipeOutput().getAmount() + "): " + wrap(Utils.getName(item.getRecipeOutput()));
+        return GetText.tr(" > Machine ID: ") + wrap(item.getRecipeType().getKey().toString()) + "\n" +
+                GetText.tr(" > Machine: ") + wrap(stripColor(name)) + "\n" +
+                GetText.tr(" > Output (") + item.getRecipeOutput().getAmount() + GetText.tr("): ") + wrap(Utils.getName(item.getRecipeOutput()));
     }
 
     public static String recipeGrid(SlimefunItem item) {
@@ -180,17 +183,17 @@ public final class Utils {
         for (Recipe recipe : recipes) {
             if(recipe instanceof ShapedRecipe) {
                 ShapedRecipe shaped = (ShapedRecipe)recipe;
-                builder.append("**合成 (有序**)");
-                builder.append("*機器人尚未實現此功能*"); // TODO: finish
+                builder.append(GetText.tr("**Crafting (Shaped**)"));
+                builder.append(GetText.tr("*Unimplemented by the bot*")); // TODO: finish
             } else if(recipe instanceof ShapelessRecipe) {
                 ShapelessRecipe shapeless = (ShapelessRecipe)recipe;
-                builder.append("**合成 (無序)**");
+                builder.append(GetText.tr("**Crafting (Shapeless)**"));
                 builder.append(recipeGrid(shapeless.getIngredientList().toArray(new ItemStack[8])));
             } else if(recipe instanceof FurnaceRecipe) {
                 FurnaceRecipe furnace = (FurnaceRecipe)recipe;
-                builder.append("**熔爐**");
-                builder.append(" > 輸入: " + furnace.getInput());
-                builder.append(" > 產物: " + furnace.getResult().getItemMeta().getDisplayName());
+                builder.append(GetText.tr("**Furnace**"));
+                builder.append(GetText.tr(" > Input: ") + furnace.getInput());
+                builder.append(GetText.tr(" > Result: ") + furnace.getResult().getItemMeta().getDisplayName());
             }
 
             builder.append("\n");
@@ -202,7 +205,7 @@ public final class Utils {
     public static String getName(ItemStack item) {
         if (item == null) return "null";
 
-        String name = item.getType().name();
+        String name = Translate.getMaterial(Locale.zh_tw, item.getType());
         if (item.hasItemMeta()) {
             if (item.getItemMeta().hasDisplayName()) {
                 name = stripColor(item.getItemMeta().getDisplayName());
@@ -251,7 +254,7 @@ public final class Utils {
     public static EmbedBuilder embed(SlashCommandInteractionEvent event) {
         return new EmbedBuilder()
                 .setColor(Color.GREEN)
-                .setFooter("由 " + event.getUser().getAsTag() + " 進行請求")
+                .setFooter(GetText.tr("Requested by {0}", event.getUser().getEffectiveName()))
                 .setTimestamp(Instant.now());
     }
 

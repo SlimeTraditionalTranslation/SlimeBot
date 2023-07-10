@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.SlimeBot;
 import tsp.slimebot.command.discord.CommandManager;
 import tsp.slimebot.command.discord.SlimeCommand;
@@ -29,8 +30,8 @@ public class DiscordCommandListener extends ListenerAdapter {
         if (event.getMember() != null) {
             if (!hasPermission(event.getMember(), command.getRequiredRoles())) {
                 event.replyEmbeds(Utils.embed(event)
-                                .setAuthor("沒有權限!")
-                                .appendDescription("你沒有權限來執行此指令!")
+                                .setAuthor(GetText.tr("No permission!"))
+                                .appendDescription(GetText.tr("You do not have permission to run this command!"))
                                 .build())
                         .setEphemeral(true) // No permission messages are always ephemeral
                         .queue();
@@ -44,7 +45,7 @@ public class DiscordCommandListener extends ListenerAdapter {
 
         if (manager.shouldLogCommands()) {
             User user = event.getUser();
-            Log.info(user.getAsTag() + " (" + user.getId() + ") executed command: " + command.getName());
+            Log.info(GetText.tr("{0} ({1}) executed command: {2}", user.getName(), user.getId(), command.getName()));
         }
     }
 

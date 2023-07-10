@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.bukkit.plugin.Plugin;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class ItemListCommand extends SlimeCommand {
         String result = Utils.asString(results);
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor(type.toUpperCase() + " 物品 | 頁面: " + page)
+                .setAuthor(type.toUpperCase() + GetText.tr(" Items | Page: ") + page)
                 .appendDescription(result.substring(0, Math.min(result.length(), 4096))) // Discord character limit
                 .build()
         ).queue();

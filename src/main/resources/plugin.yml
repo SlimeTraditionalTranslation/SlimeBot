@@ -5,6 +5,7 @@ main: tsp.slimebot.SlimeBot
 version: Build - ${number}
 author: Silent
 depend: [Slimefun]
+api-version: 1.16
 
 commands:
   slimebot:

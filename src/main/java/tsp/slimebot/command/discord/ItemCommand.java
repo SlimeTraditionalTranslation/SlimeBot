@@ -3,6 +3,7 @@ package tsp.slimebot.command.discord;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.bukkit.ChatColor;
+import org.mini2Dx.gettext.GetText;
 import tsp.slimebot.util.Utils;
 
 public class ItemCommand extends SlimeCommand {
@@ -22,19 +23,19 @@ public class ItemCommand extends SlimeCommand {
 
                 event.getHook().editOriginalEmbeds(Utils.embed(event)
                         .setAuthor(name, !wiki.isEmpty() ? wiki : "https://github.com/Slimefun/Slimefun4/wiki")
-                        .appendDescription("**資訊**" + "\n")
+                        .appendDescription(GetText.tr("**Information**") + "\n")
                         .appendDescription(Utils.information(item))
                         .appendDescription("\n")
-                        .appendDescription("**介紹**" + "\n")
+                        .appendDescription(GetText.tr("**Description**") + "\n")
                         .appendDescription(Utils.description(item))
                         .appendDescription("\n")
-                        .appendDescription("**類別**\n")
+                        .appendDescription(GetText.tr("**Category**") + "\n")
                         .appendDescription(Utils.category(item.getItemGroup()))
                         .appendDescription("\n")
-                        .appendDescription("**研究**\n")
+                        .appendDescription(GetText.tr("**Research**") + "\n")
                         .appendDescription(Utils.research(item.getResearch()))
                         .appendDescription("\n")
-                        .appendDescription("**配方**" + "\n")
+                        .appendDescription(GetText.tr("**Recipe**") + "\n")
                         .appendDescription(Utils.recipe(item) + "\n")
                         .appendDescription(Utils.recipeGrid(item))
                         .build()
@@ -44,8 +45,8 @@ public class ItemCommand extends SlimeCommand {
         }
 
         event.getHook().editOriginalEmbeds(Utils.embed(event)
-                .setAuthor("未知物品.")
-                .appendDescription("無法找到物品: " + Utils.wrap(rawItem))
+                .setAuthor(GetText.tr("Invalid item."))
+                .appendDescription(GetText.tr("Could not find item: ") + Utils.wrap(rawItem))
                 .build()).queue();
     }
 }
